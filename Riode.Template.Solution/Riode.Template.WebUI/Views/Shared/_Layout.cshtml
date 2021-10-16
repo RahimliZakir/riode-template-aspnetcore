@@ -25,22 +25,24 @@
         })(document);
     </script>
 
-    <base href="~/assets/" />
+    <base href="~/" />
 
-    <link rel="stylesheet" type="text/css" href="vendor/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/animate/animate.min.css">
 
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" type="text/css" href="vendor/magnific-popup/magnific-popup.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/vendor/owl-carousel/owl.carousel.min.css">
 
     <!-- Main CSS File -->
-    <link rel="stylesheet" type="text/css" href="css/demo23.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/demo23.min.css">
 
-    <link rel="stylesheet" href="css/style.min.css"/>
+    <link rel="stylesheet" href="assets/css/style.min.css" />
+
+    @await RenderSectionAsync("css", required: false)
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/icons/favicon.png">
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon.png">
 </head>
 
 <body class="home">
@@ -93,8 +95,8 @@
                         <a href="#" class="mobile-menu-toggle">
                             <i class="d-icon-bars2"></i>
                         </a>
-                        <a href="demo23.html" class="logo">
-                            <img src="images/demos/demo23/logo.png" alt="logo" width="153" height="44" />
+                        <a asp-action="Index" asp-controller="Home" class="logo">
+                            <img src="assets/images/demos/demo23/logo.png" alt="logo" width="153" height="44" />
                         </a>
                         <!-- End Logo -->
 
@@ -164,7 +166,7 @@
                                     <div class="product product-cart">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="images/cart/product-1.jpg" alt="product" width="80"
+                                                <img src="assets/images/cart/product-1.jpg" alt="product" width="80"
                                                      height="88" />
                                             </a>
                                             <button class="btn btn-link btn-close">
@@ -184,7 +186,7 @@
                                     <div class="product product-cart">
                                         <figure class="product-media">
                                             <a href="product.html">
-                                                <img src="images/cart/product-2.jpg" alt="product" width="80"
+                                                <img src="assets/images/cart/product-2.jpg" alt="product" width="80"
                                                      height="88" />
                                             </a>
                                             <button class="btn btn-link btn-close">
@@ -257,7 +259,7 @@
                     <div class="row align-items-center">
                         <div class="col-lg-3">
                             <a href="demo23.html" class="logo-footer">
-                                <img src="images/demos/demo23/logo-footer.png" alt="logo-footer" width="154"
+                                <img src="assets/images/demos/demo23/logo-footer.png" alt="logo-footer" width="154"
                                      height="43" />
                             </a>
                             <!-- End FooterLogo -->
@@ -360,28 +362,28 @@
                                 <h4 class="widget-title">Instagram</h4>
                                 <figure class="widget-body row">
                                     <div class="col-3">
-                                        <img src="images/instagram/01.jpg" alt="instagram 1" width="64" height="64" />
+                                        <img src="assets/images/instagram/01.jpg" alt="instagram 1" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/02.jpg" alt="instagram 2" width="64" height="64" />
+                                        <img src="assets/images/instagram/02.jpg" alt="instagram 2" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/03.jpg" alt="instagram 3" width="64" height="64" />
+                                        <img src="assets/images/instagram/03.jpg" alt="instagram 3" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/04.jpg" alt="instagram 4" width="64" height="64" />
+                                        <img src="assets/images/instagram/04.jpg" alt="instagram 4" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/05.jpg" alt="instagram 5" width="64" height="64" />
+                                        <img src="assets/images/instagram/05.jpg" alt="instagram 5" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/06.jpg" alt="instagram 6" width="64" height="64" />
+                                        <img src="assets/images/instagram/06.jpg" alt="instagram 6" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/07.jpg" alt="instagram 7" width="64" height="64" />
+                                        <img src="assets/images/instagram/07.jpg" alt="instagram 7" width="64" height="64" />
                                     </div>
                                     <div class="col-3">
-                                        <img src="images/instagram/08.jpg" alt="instagram 8" width="64" height="64" />
+                                        <img src="assets/images/instagram/08.jpg" alt="instagram 8" width="64" height="64" />
                                     </div>
                                 </figure>
                             </div>
@@ -393,7 +395,7 @@
                 <div class="footer-bottom">
                     <div class="footer-left">
                         <figure class="payment">
-                            <img src="images/payment.png" alt="payment" width="159" height="29" />
+                            <img src="assets/images/payment.png" alt="payment" width="159" height="29" />
                         </figure>
                     </div>
                     <div class="footer-center">
@@ -534,7 +536,7 @@
                         <li>
                             <a href="#">Product Layouts</a>
                             <ul>
-                                <li><a href="product-grid.html">Grid Images<span class="tip tip-new">New</span></a></li>
+                                <li><a href="product-grid.html">Grid assets/images<span class="tip tip-new">New</span></a></li>
                                 <li><a href="product-masonry.html">Masonry</a></li>
                                 <li><a href="product-gallery.html">Gallery Type</a></li>
                                 <li><a href="product-full.html">Full Width Layout</a></li>
@@ -618,7 +620,7 @@
         </div>
     </div>
 
-    @*<div class="newsletter-popup mfp-hide" id="newsletter-popup" style="background-image: url(images/newsletter-popup.jpg)">
+    @*<div class="newsletter-popup mfp-hide" id="newsletter-popup" style="background-image: url(assets/images/newsletter-popup.jpg)">
             <div class="newsletter-content">
                 <h4 class="text-uppercase text-dark">Up to <span class="text-primary">20% Off</span></h4>
                 <h2 class="font-weight-semi-bold">Sign up to <span>RIODE</span></h2>
@@ -640,17 +642,19 @@
         </div>*@
 
     <!-- Plugins JS File -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/elevatezoom/jquery.elevatezoom.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/elevatezoom/jquery.elevatezoom.min.js"></script>
+    <script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-    <script src="vendor/owl-carousel/owl.carousel.min.js"></script>
-    <script src="vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="vendor/isotope/isotope.pkgd.min.js"></script>
-    <script src="vendor/jquery.plugin/jquery.plugin.min.js"></script>
-    <script src="vendor/jquery.countdown/jquery.countdown.min.js"></script>
+    <script src="assets/vendor/owl-carousel/owl.carousel.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/jquery.plugin/jquery.plugin.min.js"></script>
+    <script src="assets/vendor/jquery.countdown/jquery.countdown.min.js"></script>
     <!-- Main JS File -->
-    <script src="js/main.min.js"></script>
+    <script src="assets/js/main.min.js"></script>
+
+    @await RenderSectionAsync("scripts", required: false)
 
     <script>
         $(document).ready(function () {
