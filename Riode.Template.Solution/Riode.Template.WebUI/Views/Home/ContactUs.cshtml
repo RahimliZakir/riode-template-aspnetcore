@@ -46,7 +46,8 @@
                 </div>
                 <div class="col-lg-9 col-md-8 col-sm-6 d-flex align-items-center mb-4">
                     <div class="w-100">
-                        <form class="pl-lg-2" method="post">
+                        <form class="pl-lg-2" method="post" id="contact-form">
+                            <div asp-validation-summary="ModelOnly"></div>
                             <h4 class="ls-m font-weight-bold">Let’s Connect</h4>
                             <p>
                                 Your email address will not be published. Required fields are
@@ -55,13 +56,16 @@
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-4">
                                     <input class="form-control" type="text" placeholder="Name *" asp-for="Name" required>
+                                    <span asp-validation-for="Name" style="color: red;"></span>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <input class="form-control" type="email" placeholder="Email *" asp-for="Email" required>
+                                    <span asp-validation-for="Email" style="color: red;"></span>
                                 </div>
                                 <div class="col-12 mb-4">
                                     <textarea class="form-control" required asp-for="Comment"
                                               placeholder="Comment*"></textarea>
+                                    <span asp-validation-for="Comment" style="color: red;"></span>
                                 </div>
                             </div>
                             <button class="btn btn-dark btn-rounded" type="submit">
@@ -153,4 +157,33 @@
     <script src="libraries/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="libraries/toastr.js/toastr.min.js"></script>
     <script src="libraries/toastr.js/toastr.customization.js"></script>
+    <script>
+        $('#contact-form').submit((e) => {
+            e.preventDefault();
+
+            let formData = new FormData(e.currentTarget);
+
+           $.ajax({
+               url: "@Url.Action("ContactUs")",
+               type: "POST",
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function (successMsg) {
+                   if (!successMsg.error) {
+                       toastr.success(successMsg.message, "Uğurlu!");
+
+                       $(e.currentTarget).find('input, textarea').val('');
+
+                       return;
+                   }
+
+                   toastr.error(successMsg.message, "Xəta!");
+               },
+               error: function (errorMsg) {
+                   toastr.error(errorMsg.message, "Xəta!");
+               }
+           });
+        });
+    </script>
 }

@@ -61,18 +61,30 @@ namespace Riode.Template.WebUI.Controllers
 
                     await db.Contacts.AddAsync(contact);
                     await db.SaveChangesAsync();
+
+                    return Json(new
+                    {
+                        error = false,
+                        message = "Şərhiniz uğurla göndərildi, həmçinin e-mail-inizə təsdiq mesajı ötürüldü!"
+                    });
                 }
                 catch (Exception)
                 {
                     return Json(new
                     {
                         error = true,
-                        message = ""
+                        message = "Məlumatlar yaddaşda saxlanılan zaman xəta baş verdi!"
                     });
                 }
             }
 
-            return View();
+            //return View();
+
+            return Json(new
+            {
+                error = true,
+                message = "Məlumatları doldurun!"
+            });
         }
 
         public IActionResult Faqs()
