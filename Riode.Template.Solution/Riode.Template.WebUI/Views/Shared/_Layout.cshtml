@@ -38,6 +38,11 @@
     <link rel="stylesheet" type="text/css" href="assets/css/demo23.min.css">
     <link rel="stylesheet" href="libraries/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/style.min.css" />
+    <style>
+        .cart-action > a {
+            text-decoration: none;
+        }
+    </style>
 
     @await RenderSectionAsync("css", required: false)
 
@@ -213,8 +218,8 @@
                                 </div>
                                 <!-- End of Cart Total -->
                                 <div class="cart-action">
-                                    <a href="cart.html" class="btn btn-dark btn-link">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-dark"><span>Go To Checkout</span></a>
+                                    <a asp-action="Cart" asp-controller="Shopping" class="btn btn-dark btn-link">View Cart</a>
+                                    <a asp-action="Checkout" asp-controller="Shopping" class="btn btn-dark"><span>Go To Checkout</span></a>
                                 </div>
                                 <!-- End of Cart Action -->
                             </div>
@@ -342,10 +347,10 @@
                                         <a href="#">Sign in</a>
                                     </li>
                                     <li>
-                                        <a href="cart.html">View Cart</a>
+                                        <a asp-action="Cart" asp-controller="Shopping">View Cart</a>
                                     </li>
                                     <li>
-                                        <a href="wishlist.html">My Wishlist</a>
+                                        <a asp-action="WishList" asp-controller="Account">My Wishlist</a>
                                     </li>
                                     <li>
                                         <a href="#">Track My Order</a>
@@ -742,7 +747,7 @@
         else {
             console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
         }
-                                                    // ]]>
+                                                        // ]]>
     </script>
 </body>
 </html>

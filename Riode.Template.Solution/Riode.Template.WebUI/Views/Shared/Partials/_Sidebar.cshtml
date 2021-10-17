@@ -1,29 +1,29 @@
 ﻿<nav class="main-nav ml-0">
     <ul class="menu">
         <li class="active">
-            <a href="demo23.html">Home</a>
+            <a asp-action="Index" asp-controller="Home">Home</a>
         </li>
         <li>
-            <a href="demo23-shop.html">Categories</a>
+            <a asp-action="Index" asp-controller="Categories">Categories</a>
             <div class="megamenu">
                 <div class="row">
                     <div class="col-6 col-sm-4 col-md-3 col-lg-4">
                         <h4 class="menu-title">Variations 1</h4>
                         <ul>
-                            <li><a href="shop-banner-sidebar.html">Banner With Sidebar</a></li>
-                            <li><a href="shop-boxed-banner.html">Boxed Banner</a></li>
-                            <li><a href="shop-infinite-scroll.html">Infinite Ajaxscroll</a></li>
+                            <li><a asp-action="BannerWithSidebar" asp-controller="Categories">Banner With Sidebar</a></li>
+                            <li><a asp-action="BoxedBanner" asp-controller="Categories">Boxed Banner</a></li>
+                            <li><a asp-action="InfiniteAJAXScroll" asp-controller="Categories">Infinite Ajaxscroll</a></li>
                             <li>
-                                <a href="shop-horizontal-filter.html">Horizontal Filter</a>
+                                <a asp-action="HorizontalFilter" asp-controller="Categories">Horizontal Filter</a>
                             </li>
                             <li>
-                                <a href="shop-navigation-filter.html">
+                                <a asp-action="NavigationFilter" asp-controller="Categories">
                                     Navigation Filter<span class="tip tip-hot">Hot</span>
                                 </a>
                             </li>
 
-                            <li><a href="shop-off-canvas.html">Off-Canvas Filter</a></li>
-                            <li><a href="shop-right-sidebar.html">Right Toggle Sidebar</a></li>
+                            <li><a asp-action="OffCanvasFilter" asp-controller="Categories">Off-Canvas Filter</a></li>
+                            <li><a asp-action="RightToggleSidebar" asp-controller="Categories">Right Toggle Sidebar</a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-4">
@@ -31,16 +31,16 @@
                         <ul>
 
                             <li>
-                                <a href="shop-grid-3cols.html">
+                                <a asp-action="ThreeColumnsMode" asp-controller="Categories">
                                     3 Columns Mode<span class="tip tip-new">New</span>
                                 </a>
                             </li>
-                            <li><a href="shop-grid-4cols.html">4 Columns Mode</a></li>
-                            <li><a href="shop-grid-5cols.html">5 Columns Mode</a></li>
-                            <li><a href="shop-grid-6cols.html">6 Columns Mode</a></li>
-                            <li><a href="shop-grid-7cols.html">7 Columns Mode</a></li>
-                            <li><a href="shop-grid-8cols.html">8 Columns Mode</a></li>
-                            <li><a href="shop-list.html">List Mode</a></li>
+                            <li><a asp-action="FourColumnsMode" asp-controller="Categories">4 Columns Mode</a></li>
+                            <li><a asp-action="FiveColumnsMode" asp-controller="Categories">5 Columns Mode</a></li>
+                            <li><a asp-action="SixColumnsMode" asp-controller="Categories">6 Columns Mode</a></li>
+                            <li><a asp-action="SevenColumnsMode" asp-controller="Categories">7 Columns Mode</a></li>
+                            <li><a asp-action="EightColumnsMode" asp-controller="Categories">8 Columns Mode</a></li>
+                            <li><a asp-action="ListMode" asp-controller="Categories">List Mode</a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-4 menu-banner menu-banner1 banner banner-fixed">
@@ -66,45 +66,45 @@
             </div>
         </li>
         <li>
-            <a href="demo23-product.html">Products</a>
+            <a asp-action="Index" asp-controller="Products">Products</a>
             <div class="megamenu">
                 <div class="row">
                     <div class="col-6 col-sm-4 col-md-3 col-lg-4">
                         <h4 class="menu-title">Product Pages</h4>
                         <ul>
-                            <li><a href="product-simple.html">Simple Product</a></li>
-                            <li><a href="product.html">Variable Product</a></li>
-                            <li><a href="product-sale.html">Sale Product</a></li>
-                            <li><a href="product-featured.html">Featured &amp; On Sale</a></li>
+                            <li><a asp-action="SimpleProduct" asp-controller="Products">Simple Product</a></li>
+                            <li><a asp-action="VariableProduct" asp-controller="Products">Variable Product</a></li>
+                            <li><a asp-action="SaleProduct" asp-controller="Products">Sale Product</a></li>
+                            <li><a asp-action="FeaturedAndOnSale" asp-controller="Products">Featured &amp; On Sale</a></li>
 
-                            <li><a href="product-left-sidebar.html">With Left Sidebar</a></li>
-                            <li><a href="product-right-sidebar.html">With Right Sidebar</a></li>
+                            <li><a asp-action="WithLeftSidebar" asp-controller="Products">With Left Sidebar</a></li>
+                            <li><a asp-action="WithRightSidebar" asp-controller="Products">With Right Sidebar</a></li>
                             <li>
-                                <a href="product-sticky-cart.html">
+                                <a asp-action="AddCartSticky" asp-controller="Products">
                                     Add Cart Sticky<span class="tip tip-hot">Hot</span>
                                 </a>
                             </li>
-                            <li><a href="product-tabinside.html">Tab Inside</a></li>
+                            <li><a asp-action="TabInside" asp-controller="Products">Tab Inside</a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-4">
                         <h4 class="menu-title">Product Layouts</h4>
                         <ul>
                             <li>
-                                <a href="product-grid.html">
+                                <a asp-action="GridImages" asp-controller="Products">
                                     Grid Images<span class="tip tip-new">New</span>
                                 </a>
                             </li>
-                            <li><a href="product-masonry.html">Masonry</a></li>
-                            <li><a href="product-gallery.html">Gallery Type</a></li>
-                            <li><a href="product-full.html">Full Width Layout</a></li>
-                            <li><a href="product-sticky.html">Sticky Info</a></li>
+                            <li><a asp-action="Masonry" asp-controller="Products">Masonry</a></li>
+                            <li><a asp-action="GalleryType" asp-controller="Products">Gallery Type</a></li>
+                            <li><a asp-action="FullWidthLayout" asp-controller="Products">Full Width Layout</a></li>
+                            <li><a asp-action="StickyInfo" asp-controller="Products">Sticky Info</a></li>
                             <li>
-                                <a href="product-sticky-both.html">Left &amp; Right Sticky</a>
+                                <a asp-action="LeftAndRightSticky" asp-controller="Products">Left &amp; Right Sticky</a>
                             </li>
-                            <li><a href="product-horizontal.html">Horizontal Thumb</a></li>
+                            <li><a asp-action="HorizontalThumb" asp-controller="Products">Horizontal Thumb</a></li>
 
-                            <li><a href="#">Build Your Own</a></li>
+                            <li><a asp-action="BuildYourOwn" asp-controller="Products">Build Your Own</a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-sm-4 col-md-3 col-lg-4 menu-banner menu-banner2 banner banner-fixed">
@@ -133,62 +133,62 @@
                 <li><a asp-action="Profile" asp-controller="Account">My Account</a></li>
                 <li><a asp-action="WishList" asp-controller="Account">Wishlist</a></li>
                 <li><a asp-action="Faqs" asp-controller="Home">FAQs</a></li>
-                <li><a href="error-404.html">Error 404</a></li>
-                <li><a href="coming-soon.html">Coming Soon</a></li>
+                <li><a asp-action="Error404" asp-controller="Home">Error 404</a></li>
+                <li><a asp-action="ComingSoon" asp-controller="Home">Coming Soon</a></li>
             </ul>
         </li>
         <li>
-            <a href="blog-classic.html">Blog</a>
+            <a asp-action="Index" asp-controller="Blog">Blog</a>
             <ul>
-                <li><a href="blog-classic.html">Classic</a></li>
-                <li><a href="blog-listing.html">Listing</a></li>
+                <li><a asp-action="Classic" asp-controller="Blog">Classic</a></li>
+                <li><a asp-action="Listing" asp-controller="Blog">Listing</a></li>
                 <li>
                     <a href="#">Grid</a>
                     <ul>
-                        <li><a href="blog-grid-2col.html">Grid 2 columns</a></li>
-                        <li><a href="blog-grid-3col.html">Grid 3 columns</a></li>
-                        <li><a href="blog-grid-4col.html">Grid 4 columns</a></li>
-                        <li><a href="blog-grid-sidebar.html">Grid sidebar</a></li>
+                        <li><a asp-action="GridTwoColumns" asp-controller="Blog">Grid 2 columns</a></li>
+                        <li><a asp-action="GridThreeColumns" asp-controller="Blog">Grid 3 columns</a></li>
+                        <li><a asp-action="GridFourColumns" asp-controller="Blog">Grid 4 columns</a></li>
+                        <li><a asp-action="GridSidebar" asp-controller="Blog">Grid sidebar</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#">Masonry</a>
                     <ul>
-                        <li><a href="blog-masonry-2col.html">Masonry 2 columns</a></li>
-                        <li><a href="blog-masonry-3col.html">Masonry 3 columns</a></li>
-                        <li><a href="blog-masonry-4col.html">Masonry 4 columns</a></li>
-                        <li><a href="blog-masonry-sidebar.html">Masonry sidebar</a></li>
+                        <li><a asp-action="MasonryTwoColumns" asp-controller="Blog">Masonry 2 columns</a></li>
+                        <li><a asp-action="MasonryThreeColumns" asp-controller="Blog">Masonry 3 columns</a></li>
+                        <li><a asp-action="MasonryFourColumns" asp-controller="Blog">Masonry 4 columns</a></li>
+                        <li><a asp-action="MasonrySidebar" asp-controller="Blog">Masonry sidebar</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="#">Mask</a>
                     <ul>
-                        <li><a href="blog-mask-grid.html">Blog mask grid</a></li>
-                        <li><a href="blog-mask-masonry.html">Blog mask masonry</a></li>
+                        <li><a asp-action="BlogMaskGrid" asp-controller="Blog">Blog mask grid</a></li>
+                        <li><a asp-action="BlogMaskMasonry" asp-controller="Blog">Blog mask masonry</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="post-single.html">Single Post</a>
+                    <a asp-action="SinglePost" asp-controller="Blog">Single Post</a>
                 </li>
             </ul>
         </li>
         <li class="d-xl-show">
             <a href="#">Elements</a>
             <ul>
-                <li><a href="element-products.html">Products</a></li>
-                <li><a href="element-typography.html">Typography</a></li>
-                <li><a href="element-titles.html">Titles</a></li>
-                <li><a href="element-categories.html">Product Category</a></li>
-                <li><a href="element-buttons.html">Buttons</a></li>
-                <li><a href="element-accordions.html">Accordions</a></li>
-                <li><a href="element-alerts.html">Alert &amp; Notification</a></li>
-                <li><a href="element-tabs.html">Tabs</a></li>
-                <li><a href="element-testimonials.html">Testimonials</a></li>
-                <li><a href="element-blog-posts.html">Blog Posts</a></li>
-                <li><a href="element-instagrams.html">Instagrams</a></li>
-                <li><a href="element-cta.html">Call to Action</a></li>
-                <li><a href="element-icon-boxes.html">Icon Boxes</a></li>
-                <li><a href="element-icons.html">Icons</a></li>
+                <li><a asp-action="Products" asp-controller="Elements">Products</a></li>
+                <li><a asp-action="Typography" asp-controller="Elements">Typography</a></li>
+                <li><a asp-action="Titles" asp-controller="Elements">Titles</a></li>
+                <li><a asp-action="ProductCategory" asp-controller="Elements">Product Category</a></li>
+                <li><a asp-action="Buttons" asp-controller="Elements">Buttons</a></li>
+                <li><a asp-action="Accordions" asp-controller="Elements">Accordions</a></li>
+                <li><a asp-action="AlertAndNotification" asp-controller="Elements">Alert &amp; Notification</a></li>
+                <li><a asp-action="Tabs" asp-controller="Elements">Tabs</a></li>
+                <li><a asp-action="Testimonials" asp-controller="Elements">Testimonials</a></li>
+                <li><a asp-action="BlogPosts" asp-controller="Elements">Blog Posts</a></li>
+                <li><a asp-action="Instagrams" asp-controller="Elements">Instagrams</a></li>
+                <li><a asp-action="CallToAction" asp-controller="Elements">Call to Action</a></li>
+                <li><a asp-action="IconBoxes" asp-controller="Elements">Icon Boxes</a></li>
+                <li><a asp-action="Icons" asp-controller="Elements">Icons</a></li>
             </ul>
         </li>
         <li>

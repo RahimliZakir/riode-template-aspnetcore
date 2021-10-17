@@ -50,6 +50,17 @@ namespace Riode.Template.WebUI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(name: "adminArea", areaName: "admin",
+                    pattern: "admin/{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(name: "BlogRoute",
+                    pattern: "blog.html",
+                    defaults: new
+                    {
+                        action = "Index",
+                        controller = "Blog"
+                    });
+
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
