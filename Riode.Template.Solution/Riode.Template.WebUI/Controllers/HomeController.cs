@@ -65,7 +65,7 @@ namespace Riode.Template.WebUI.Controllers
                     return Json(new
                     {
                         error = false,
-                        message = "Şərhiniz uğurla göndərildi, həmçinin e-mail-inizə təsdiq mesajı ötürüldü!"
+                        message = "Şərhiniz uğurla göndərildi,  e-mail-inizi yoxlayın!"
                     });
                 }
                 catch (Exception)
@@ -100,6 +100,50 @@ namespace Riode.Template.WebUI.Controllers
         public IActionResult ComingSoon()
         {
             return View();
+        }
+
+        [HttpPost]
+        async public Task<IActionResult> Subscribe(string email)
+        {
+            SmtpClient client = new SmtpClient()
+            {
+                Host = "smtp.mail.ru",
+                EnableSsl = true,
+                Port = 25
+            };
+
+            client.Credentials = new NetworkCredential(conf.GetValue<string>("FactoryCredentials:Email"), conf["FactoryCredentials:Pwd"]);
+
+            MailMessage message = new MailMessage(conf.GetValue<string>("FactoryCredentials:Email"), email);
+            message.Subject = "Uğurla abuna oldunuz!";
+            message.Body = $"Hörmətli {email}, sizin abunəliyiniz təsdiqləndi! Təşəkkür edirik!";
+
+            try
+            {
+                client.Send(message);
+
+                Subscribe subscribe = new Subscribe
+                {
+                    Email = email
+                };
+
+                await db.Subscribes.AddAsync(subscribe);
+                await db.SaveChangesAsync();
+
+                return Json(new
+                {
+                    error = false,
+                    message = "Abunəliyiniz təsdiqləndi, həmçinin e-mail-inizə təsdiq mesajı göndərildi!"
+                });
+            }
+            catch (Exception)
+            {
+                return Json(new
+                {
+                    error = true,
+                    message = "Məlumatlar yaddaşda saxlanılan zaman xəta baş verdi!"
+                });
+            }
         }
     }
 }

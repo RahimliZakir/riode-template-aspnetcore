@@ -16,6 +16,7 @@ namespace Riode.Template.WebUI.Models.DataContext
         }
 
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Subscribe> Subscribes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,6 +25,10 @@ namespace Riode.Template.WebUI.Models.DataContext
             builder.Entity<Contact>()
                    .Property(c => c.CreatedDate)
                    .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
+
+            builder.Entity<Subscribe>()
+                  .Property(c => c.SubscribeDate)
+                  .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
         }
     }
 }

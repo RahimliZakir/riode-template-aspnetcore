@@ -36,7 +36,7 @@
 
     <!-- Main CSS File -->
     <link rel="stylesheet" type="text/css" href="assets/css/demo23.min.css">
-
+    <link rel="stylesheet" href="libraries/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/style.min.css" />
 
     @await RenderSectionAsync("css", required: false)
@@ -240,7 +240,7 @@
             <div class="header-bottom d-lg-show">
                 <div class="container">
                     <div class="header-left">
-                        <partial name="Partials/_Sidebar.cshtml"/>
+                        <partial name="Partials/_Sidebar.cshtml" />
                     </div>
                     <div class="header-right">
                         <a href="https://d-themes.com/buynow/riodehtml" target="_blank" class="ml-6">Buy Riode!</a>
@@ -270,9 +270,9 @@
                                     <h4 class="widget-title">Subscribe to our Newsletter</h4>
                                     <p class="mb-0">Get all the latest information, Sales and Offers.</p>
                                 </div>
-                                <form action="#" class="input-wrapper input-wrapper-inline">
+                                <form class="input-wrapper input-wrapper-inline">
                                     <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="Email address here..." required />
+                                           placeholder="Email address here..." />
                                     <button class="btn btn-primary btn-rounded btn-md ml-2" type="submit">
                                         subscribe<i class="d-icon-arrow-right"></i>
                                     </button>
@@ -654,6 +654,41 @@
     <!-- Main JS File -->
     <script src="assets/js/main.min.js"></script>
 
+    @*Email Subscription*@
+    <script>
+        $('.input-wrapper-inline').submit(function (e) {
+            e.preventDefault();
+
+            let input = $(e.currentTarget).find('input');
+
+            if ($(input).val().length <= 0) {
+                $(input).addClass('is-invalid');
+                return;
+            }
+            else {
+                $(input).removeClass('is-invalid');
+
+                let serialized = $(e.currentTarget).serialize();
+
+                $.ajax({
+                    url: '@Url.Action("Subscribe", "Home")',
+                    type: "POST",
+                    data: serialized,
+                    success: function (successMsg) {
+                        if (successMsg.error == false) {
+                            alert(successMsg.message);
+                            $(input).val("");
+                        }
+                    },
+                    error: function (errorMsg) {
+                        console.log(errorMsg);
+                    }
+                });
+            }
+        });
+    </script>
+    @*Email Subscription*@
+
     @await RenderSectionAsync("scripts", required: false)
 
     <script>
@@ -707,7 +742,7 @@
         else {
             console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
         }
-                // ]]>
+                                                    // ]]>
     </script>
 </body>
 </html>
