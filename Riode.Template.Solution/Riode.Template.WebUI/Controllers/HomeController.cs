@@ -91,5 +91,15 @@ namespace Riode.Template.WebUI.Controllers
         {
             return View();
         }
+
+        public IActionResult Error404()
+        {
+            return View();
+        }
+
+        public IActionResult ComingSoon()
+        {
+            return View();
+        }
     }
 }
