@@ -8,6 +8,11 @@ namespace Riode.Template.WebUI.Controllers
 {
     public class CategoriesController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         // Variations - 1
         public IActionResult BannerWithSidebar()
         {
