@@ -79,7 +79,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
         [HttpPost]
         async public Task<IActionResult> Delete(int? id)
         {
-            Brand brand = await db.Brands.FirstOrDefaultAsync(b => b.Equals(id) && b.DeletedDate == null);
+            Brand brand = await db.Brands.FirstOrDefaultAsync(b => b.Id.Equals(id) && b.DeletedDate == null);
 
             if (brand == null)
             {

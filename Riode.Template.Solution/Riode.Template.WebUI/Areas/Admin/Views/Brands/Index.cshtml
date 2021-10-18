@@ -57,22 +57,24 @@
 </div>
 
 @section scripts{
-    <script src="admin-assets/assets/js/sweetalert.js"></script>
+    <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
     <script>
         $('.brand-btn-del').click((e) => {
             let delId = $(e.currentTarget).data('del-id');
 
-            swal({
-                title: "Silmək istədiyinizə əminsinizmi?",
+            Swal.fire({
+                title: 'Silmək istədiyinizə əminsinizmi?',
                 text: "Bu əməliyyat geri qaytarılmayacaqdır!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            url: `@Url.Action("Delete")/${delId}`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli, silinsin!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                     $.ajax({
+                         url: `@Url.Action("Delete", "Brands")/${delId}`,
+                         type: "POST",
                             success: function (successMsg) {
                                 if (successMsg.error == false) {
                                     $(e.currentTarget).closest('tr').remove();
@@ -85,10 +87,14 @@
                                 alert(errorMsg);
                             }
                         });
-                    } else {
-                        swal("Silmə əməliyyatı dayandırıldı!");
-                    }
-                });
+
+                    Swal.fire(
+                        'Silindi!',
+                        'Seçdiyiniz məlumatlar silindi.',
+                        'success'
+                    )
+                }
+            })
         });
     </script>
 }
