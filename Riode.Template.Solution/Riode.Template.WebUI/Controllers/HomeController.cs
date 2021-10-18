@@ -97,11 +97,6 @@ namespace Riode.Template.WebUI.Controllers
             return View();
         }
 
-        public IActionResult ComingSoon()
-        {
-            return View();
-        }
-
         [HttpPost]
         async public Task<IActionResult> Subscribe(string email)
         {

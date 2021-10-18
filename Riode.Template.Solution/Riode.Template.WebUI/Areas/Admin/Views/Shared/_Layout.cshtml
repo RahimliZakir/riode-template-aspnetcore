@@ -13,7 +13,7 @@
           content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app" />
     <meta name="author" content="#" />
     <!-- Favicon icon -->
-    <base href="~/admin-assets/"/>
+    <base href="~/admin-assets/" />
     <link rel="icon"
           href="assets/images/favicon.ico"
           type="image/x-icon" />
@@ -29,10 +29,27 @@
           type="text/css"
           href="assets/icon/feather/css/feather.css" />
     <!-- Style.css -->
+    <script src="https://kit.fontawesome.com/3077fe3d43.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
     <link rel="stylesheet"
           type="text/css"
           href="assets/css/jquery.mCustomScrollbar.css" />
+    <style>
+        .label-required {
+            position: relative;
+            display: inline-block;
+        }
+
+            .label-required::after {
+                content: '*';
+                position: absolute;
+                color: crimson;
+            }
+
+        i {
+            margin-right: 0 !important;
+        }
+    </style>
     @await RenderSectionAsync("css", required: false)
 </head>
 
@@ -427,88 +444,87 @@
                                     </ul>
                                 </li>
                                 <li class="pcoded-hasmenu">
-                                    <a href="javascript:void(0)">
+                                    <a asp-action="Index" asp-controller="Brands">
                                         <span class="pcoded-micon">
-                                            <i class="feather icon-sidebar"></i>
+                                            <i class="feather icon-menu"></i>
                                         </span>
-                                        <span class="pcoded-mtext">Page layouts</span>
-                                        <span class="pcoded-badge label label-warning">NEW</span>
+                                        <span class="pcoded-mtext">Brands</span>
                                     </a>
-                                    <ul class="pcoded-submenu">
-                                        <li class="pcoded-hasmenu">
-                                            <a href="javascript:void(0)">
-                                                <span class="pcoded-mtext">Vertical</span>
-                                            </a>
-                                            <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="default/menu-static.html">
-                                                        <span class="pcoded-mtext">Static Layout</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="default/menu-header-fixed.html">
-                                                        <span class="pcoded-mtext">Header Fixed</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="default/menu-compact.html">
-                                                        <span class="pcoded-mtext">Compact</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="default/menu-sidebar.html">
-                                                        <span class="pcoded-mtext">Sidebar Fixed</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="pcoded-hasmenu">
-                                            <a href="javascript:void(0)">
-                                                <span class="pcoded-mtext">Horizontal</span>
-                                            </a>
-                                            <ul class="pcoded-submenu">
-                                                <li class="">
-                                                    <a href="default/menu-horizontal-static.html"
-                                                       target="_blank">
-                                                        <span class="pcoded-mtext">Static Layout</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="default/menu-horizontal-fixed.html"
-                                                       target="_blank">
-                                                        <span class="pcoded-mtext">Fixed layout</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="default/menu-horizontal-icon.html"
-                                                       target="_blank">
-                                                        <span class="pcoded-mtext">Static With Icon</span>
-                                                    </a>
-                                                </li>
-                                                <li class="">
-                                                    <a href="default/menu-horizontal-icon-fixed.html"
-                                                       target="_blank">
-                                                        <span class="pcoded-mtext">Fixed With Icon</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="">
-                                            <a href="default/menu-bottom.html">
-                                                <span class="pcoded-mtext">Bottom Menu</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="default/box-layout.html" target="_blank">
-                                                <span class="pcoded-mtext">Box Layout</span>
-                                            </a>
-                                        </li>
-                                        <li class="">
-                                            <a href="default/menu-rtl.html" target="_blank">
-                                                <span class="pcoded-mtext">RTL</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    @*<ul class="pcoded-submenu">
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)">
+                                                    <span class="pcoded-mtext">Vertical</span>
+                                                </a>
+                                                <ul class="pcoded-submenu">
+                                                    <li class="">
+                                                        <a href="default/menu-static.html">
+                                                            <span class="pcoded-mtext">Static Layout</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="default/menu-header-fixed.html">
+                                                            <span class="pcoded-mtext">Header Fixed</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="default/menu-compact.html">
+                                                            <span class="pcoded-mtext">Compact</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="default/menu-sidebar.html">
+                                                            <span class="pcoded-mtext">Sidebar Fixed</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="pcoded-hasmenu">
+                                                <a href="javascript:void(0)">
+                                                    <span class="pcoded-mtext">Horizontal</span>
+                                                </a>
+                                                <ul class="pcoded-submenu">
+                                                    <li class="">
+                                                        <a href="default/menu-horizontal-static.html"
+                                                           target="_blank">
+                                                            <span class="pcoded-mtext">Static Layout</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="default/menu-horizontal-fixed.html"
+                                                           target="_blank">
+                                                            <span class="pcoded-mtext">Fixed layout</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="default/menu-horizontal-icon.html"
+                                                           target="_blank">
+                                                            <span class="pcoded-mtext">Static With Icon</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="">
+                                                        <a href="default/menu-horizontal-icon-fixed.html"
+                                                           target="_blank">
+                                                            <span class="pcoded-mtext">Fixed With Icon</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="">
+                                                <a href="default/menu-bottom.html">
+                                                    <span class="pcoded-mtext">Bottom Menu</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="default/box-layout.html" target="_blank">
+                                                    <span class="pcoded-mtext">Box Layout</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="default/menu-rtl.html" target="_blank">
+                                                    <span class="pcoded-mtext">RTL</span>
+                                                </a>
+                                            </li>
+                                        </ul>*@
                                 </li>
                                 <li class="">
                                     <a href="default/navbar-light.html">
@@ -1880,7 +1896,16 @@
                         </div>
                     </nav>
                     <div class="pcoded-content">
-                        @RenderBody()
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    @RenderBody()
+                                </div>
+
+                                <div id="styleSelector"></div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

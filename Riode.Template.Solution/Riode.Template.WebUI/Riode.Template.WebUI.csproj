@@ -20,7 +20,12 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="wwwroot\admin-assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\static\coming-soon.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

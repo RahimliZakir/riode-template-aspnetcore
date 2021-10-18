@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Brand>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-header row align-items-center justify-content-between">
+        <div class="table-infos">
+            <h5>Basic Table</h5>
+            <span>use class <code>table</code> inside table element</span>
+        </div>
+        <div class="brand-plus-btn">
+            <a asp-action="Create" asp-controller="Brands" class="btn btn-success">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id: </th>
+                        <th>Name: </th>
+                        <th>Description: </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            Hələ ki, məlumat yoxdur!
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (Brand item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td style="float: right;">
+                                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
+                                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>
+                                    <a style="cursor: pointer;" class="btn btn-danger brand-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="admin-assets/assets/js/sweetalert.js"></script>
+    <script>
+        $('.brand-btn-del').click((e) => {
+            let delId = $(e.currentTarget).data('del-id');
+
+            swal({
+                title: "Silmək istədiyinizə əminsinizmi?",
+                text: "Bu əməliyyat geri qaytarılmayacaqdır!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: `@Url.Action("Delete")/${delId}`,
+                            success: function (successMsg) {
+                                if (successMsg.error == false) {
+                                    $(e.currentTarget).closest('tr').remove();
+                                    return;
+                                }
+
+                                alert(successMsg.message);
+                            },
+                            error: function (errorMsg) {
+                                alert(errorMsg);
+                            }
+                        });
+                    } else {
+                        swal("Silmə əməliyyatı dayandırıldı!");
+                    }
+                });
+        });
+    </script>
+}

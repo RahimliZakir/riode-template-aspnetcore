@@ -22,6 +22,14 @@
       "provider": "jsdelivr",
       "library": "bootstrap@5.1.3",
       "destination": "wwwroot/libraries/bootstrap/"
+    },
+    {
+      "library": "limonte-sweetalert2@11.1.9",
+      "destination": "wwwroot/libraries/limonte-sweetalert2/"
+    },
+    {
+      "library": "sweetalert@2.1.2",
+      "destination": "wwwroot/libraries/sweetalert/"
     }
   ]
 }

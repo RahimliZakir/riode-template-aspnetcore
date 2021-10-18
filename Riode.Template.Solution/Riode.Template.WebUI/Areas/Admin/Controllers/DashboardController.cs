@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Riode.Template.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class HomeController : Controller
+    public class DashboardController : Controller
     {
         public IActionResult Index()
         {

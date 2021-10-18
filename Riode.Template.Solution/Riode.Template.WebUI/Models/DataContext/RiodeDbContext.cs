@@ -17,6 +17,7 @@ namespace Riode.Template.WebUI.Models.DataContext
 
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Subscribe> Subscribes { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

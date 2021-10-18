@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Riode.Template.WebUI.Models.DataContext;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,6 +28,7 @@ namespace Riode.Template.WebUI
             services.AddRouting(options =>
             {
                 options.LowercaseUrls = true;
+                //options.LowercaseQueryStrings = true;
             });
 
             services.AddControllersWithViews();
@@ -50,8 +52,19 @@ namespace Riode.Template.WebUI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapAreaControllerRoute(name: "adminArea", areaName: "admin",
-                    pattern: "admin/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapGet("/comingsoon.html", async (context) =>
+                {
+                    using (StreamReader sr = new StreamReader("views/static/coming-soon.html"))
+                    {
+                        context.Response.ContentType = "text/html";
+                        await context.Response.WriteAsync(sr.ReadToEnd());
+                    }
+                });
+
+                endpoints.MapControllerRoute(
+                  name: "areas",
+                  pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+                );
 
                 endpoints.MapControllerRoute(name: "BlogRoute",
                     pattern: "blog.html",
