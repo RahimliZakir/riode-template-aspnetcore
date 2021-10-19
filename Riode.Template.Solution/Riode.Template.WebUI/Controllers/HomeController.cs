@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Riode.Template.WebUI.Models.DataContext;
 using Riode.Template.WebUI.Models.Entity;
@@ -100,6 +101,17 @@ namespace Riode.Template.WebUI.Controllers
         [HttpPost]
         async public Task<IActionResult> Subscribe(string email)
         {
+            bool check = await db.Subscribes.AnyAsync(c => c.Email.Equals(email));
+
+            if (check)
+            {
+                return Json(new
+                {
+                    error = false,
+                    message = "Siz artıq bizim abunəliyimizə qoşulmusunuz!"
+                });
+            }
+
             SmtpClient client = new SmtpClient()
             {
                 Host = "smtp.mail.ru",
