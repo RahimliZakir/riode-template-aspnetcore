@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Riode.Template.WebUI.Models.DataContext;
 
 namespace Riode.Template.WebUI.Migrations
 {
     [DbContext(typeof(RiodeDbContext))]
-    partial class RiodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211022231647_ColorsAndFaqs")]
+    partial class ColorsAndFaqs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,10 +125,9 @@ namespace Riode.Template.WebUI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Answer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CreatedByUserId")
+                    b.Property<int>("CreatedByUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -134,10 +135,10 @@ namespace Riode.Template.WebUI.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
 
-                    b.Property<int?>("DeletedByUserId")
+                    b.Property<int>("DeletedByUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DeletedDate")
+                    b.Property<DateTime>("DeletedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Question")

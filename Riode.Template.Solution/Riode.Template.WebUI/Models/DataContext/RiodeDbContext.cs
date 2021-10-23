@@ -18,6 +18,8 @@ namespace Riode.Template.WebUI.Models.DataContext
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Subscribe> Subscribes { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -28,8 +30,17 @@ namespace Riode.Template.WebUI.Models.DataContext
                    .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
 
             builder.Entity<Subscribe>()
-                  .Property(c => c.SubscribeDate)
-                  .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
+                   .Property(c => c.SubscribeDate)
+                   .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
+
+            builder.Entity<Color>()
+                   .Property(c => c.CreatedDate)
+                   .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
+
+
+            builder.Entity<Faq>()
+                   .Property(c => c.CreatedDate)
+                   .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
         }
     }
 }

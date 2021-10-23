@@ -1,7 +1,16 @@
-﻿@model IEnumerable<Brand>
+﻿@model IEnumerable<Riode.Template.WebUI.Models.Entity.Color>
 
 @{
     ViewData["Title"] = "Index";
+}
+
+@section css{
+    <style>
+        .box {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
 }
 
 <div class="card">
@@ -11,7 +20,7 @@
             <span>use class <code>table</code> inside table element</span>
         </div>
         <div class="brand-plus-btn">
-            <a asp-action="Create" asp-controller="Brands" class="btn btn-success">
+            <a asp-action="Create" class="btn btn-success">
                 <i class="fas fa-plus"></i>
             </a>
         </div>
@@ -30,22 +39,28 @@
                     <thead>
                         <tr>
                             <th>Id: </th>
+                            <th>Hexcode: </th>
                             <th>Name: </th>
                             <th>Description: </th>
+                            <th>Created Date: </th>
+                            <th>Updated Date: </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Brand item in Model)
+                        @foreach (Color item in Model)
                         {
                             <tr>
                                 <th scope="row">@item.Id</th>
+                                <td class="d-flex align-items-center"><div class="box" style="background-color: @item.HexCode;"></div> @item.HexCode</td>
                                 <td>@item.Name</td>
                                 <td>@item.Description</td>
+                                <td>@item.CreatedDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                                <td>@item.UpdatedDate?.ToString("dd.MM.yyyy HH:mm:ss")</td>
                                 <td style="float: right;">
                                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
                                     <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>
-                                    <a style="cursor: pointer; color: white;" class="btn btn-danger brand-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+                                    <a style="cursor: pointer; color: white;" class="btn btn-danger color-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         }
@@ -59,8 +74,8 @@
 @section scripts{
     <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
     <script>
-        $(document).ready(function () {
-              $('.brand-btn-del').click((e) => {
+        $(function () {
+            $('.color-btn-del').click((e) => {
             let delId = $(e.currentTarget).data('del-id');
 
             Swal.fire({
@@ -74,7 +89,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                      $.ajax({
-                         url: `@Url.Action("Delete", "Brands")/${delId}`,
+                         url: `@Url.Action("Delete")/${delId}`,
                          type: "POST",
                             success: function (successMsg) {
                                 if (successMsg.error == false) {
