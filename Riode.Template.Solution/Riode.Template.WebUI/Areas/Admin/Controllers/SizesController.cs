@@ -11,22 +11,22 @@ using Riode.Template.WebUI.Models.Entity;
 namespace Riode.Template.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ColorsController : Controller
+    public class SizesController : Controller
     {
-        private readonly RiodeDbContext db;
+        private readonly RiodeDbContext _context;
 
-        public ColorsController(RiodeDbContext db)
+        public SizesController(RiodeDbContext context)
         {
-            this.db = db;
+            _context = context;
         }
 
-        // GET: Admin/Colors
+        // GET: Admin/Sizes
         public async Task<IActionResult> Index()
         {
-            return View(await db.Colors.Where(c => c.DeletedDate == null).ToListAsync());
+            return View(await _context.Sizes.Where(m => m.DeletedDate == null).ToListAsync());
         }
 
-        // GET: Admin/Colors/Details/5
+        // GET: Admin/Sizes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,39 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var color = await db.Colors
+            var size = await _context.Sizes
                 .FirstOrDefaultAsync(m => m.Id == id && m.DeletedDate == null);
-            if (color == null)
+            if (size == null)
             {
                 return NotFound();
             }
 
-            return View(color);
+            return View(size);
         }
 
-        // GET: Admin/Colors/Create
+        // GET: Admin/Sizes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Colors/Create
+        // POST: Admin/Sizes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HexCode,Name,Description,Id,CreatedDate,UpdatedDate,DeletedDate")] Color color)
+        public async Task<IActionResult> Create([Bind("Abbr,Name,Description,Id,CreatedDate,CreatedByUserId,DeletedDate,DeletedByUserId")] Size size)
         {
             if (ModelState.IsValid)
             {
-                db.Add(color);
-                await db.SaveChangesAsync();
+                _context.Add(size);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(color);
+            return View(size);
         }
 
-        // GET: Admin/Colors/Edit/5
+        // GET: Admin/Sizes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +74,22 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var color = await db.Colors.FirstOrDefaultAsync(c => c.Id == id && c.DeletedDate == null);
-            if (color == null)
+            var size = await _context.Sizes.FirstOrDefaultAsync(m => m.Id == id && m.DeletedDate == null);
+            if (size == null)
             {
                 return NotFound();
             }
-            return View(color);
+            return View(size);
         }
 
-        // POST: Admin/Colors/Edit/5
+        // POST: Admin/Sizes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HexCode,Name,Description,Id,CreatedDate,UpdatedDate,DeletedDate")] Color color)
+        public async Task<IActionResult> Edit(int id, [Bind("Abbr,Name,Description,Id,CreatedDate,CreatedByUserId,DeletedDate,DeletedByUserId")] Size size)
         {
-            if (id != color.Id)
+            if (id != size.Id)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             {
                 try
                 {
-                    db.Update(color);
-                    await db.SaveChangesAsync();
+                    _context.Update(size);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ColorExists(color.Id))
+                    if (!SizeExists(size.Id))
                     {
                         return NotFound();
                     }
@@ -114,17 +114,16 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(color);
+            return View(size);
         }
 
-        // POST: Admin/Colors/Delete/5
+        // POST: Admin/Sizes/Delete/5
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            Color color = await db.Colors
-                          .FirstOrDefaultAsync(m => m.Id == id && m.DeletedDate == null);
+            Size size = await _context.Sizes.FirstOrDefaultAsync(m => m.Id.Equals(id) && m.DeletedDate == null);
 
-            if (color == null)
+            if (size == null)
             {
                 return Json(new
                 {
@@ -133,8 +132,8 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 });
             }
 
-            color.DeletedDate = DateTime.UtcNow.AddHours(4);
-            await db.SaveChangesAsync();
+            size.DeletedDate = DateTime.UtcNow.AddHours(4);
+            await _context.SaveChangesAsync();
 
             return Json(new
             {
@@ -143,9 +142,9 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             });
         }
 
-        private bool ColorExists(int id)
+        private bool SizeExists(int id)
         {
-            return db.Colors.Any(e => e.Id == id && e.DeletedDate == null);
+            return _context.Sizes.Any(e => e.Id == id && e.DeletedDate == null);
         }
     }
 }

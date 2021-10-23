@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Riode.Template.WebUI.Models.DataContext;
 
 namespace Riode.Template.WebUI.Migrations
 {
     [DbContext(typeof(RiodeDbContext))]
-    partial class RiodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211023013352_UpdatedDateDeprecation")]
+    partial class UpdatedDateDeprecation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,42 +43,6 @@ namespace Riode.Template.WebUI.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CreatedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DeletedByUserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Categories");
-                });
-
             modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.Color", b =>
                 {
                     b.Property<int>("Id")
@@ -88,7 +54,9 @@ namespace Riode.Template.WebUI.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
 
                     b.Property<int?>("DeletedByUserId")
                         .HasColumnType("int");
@@ -167,7 +135,9 @@ namespace Riode.Template.WebUI.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
 
                     b.Property<int?>("DeletedByUserId")
                         .HasColumnType("int");
@@ -199,7 +169,9 @@ namespace Riode.Template.WebUI.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
 
                     b.Property<int?>("DeletedByUserId")
                         .HasColumnType("int");
@@ -244,20 +216,6 @@ namespace Riode.Template.WebUI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subscribes");
-                });
-
-            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.Category", b =>
-                {
-                    b.HasOne("Riode.Template.WebUI.Models.Entity.Category", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.Category", b =>
-                {
-                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

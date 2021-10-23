@@ -20,6 +20,8 @@ namespace Riode.Template.WebUI.Models.DataContext
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Faq> Faqs { get; set; }
+        public DbSet<Size> Sizes { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,15 +33,6 @@ namespace Riode.Template.WebUI.Models.DataContext
 
             builder.Entity<Subscribe>()
                    .Property(c => c.SubscribeDate)
-                   .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
-
-            builder.Entity<Color>()
-                   .Property(c => c.CreatedDate)
-                   .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
-
-
-            builder.Entity<Faq>()
-                   .Property(c => c.CreatedDate)
                    .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
         }
     }

@@ -10,11 +10,15 @@ namespace Riode.Template.WebUI.Models.Entity
     {
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreatedDate { get; set; }
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(4);
 
-        public DateTime? UpdatedDate { get; set; }
+#nullable enable
+        public int? CreatedByUserId { get; set; }
 
         public DateTime? DeletedDate { get; set; }
+
+        public int? DeletedByUserId { get; set; }
+#nullable disable
     }
 }

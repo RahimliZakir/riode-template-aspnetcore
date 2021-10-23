@@ -1,4 +1,5 @@
-﻿
+﻿@model CategoryViewModel
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -31,43 +32,7 @@
                         </div>
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">All Categories</h3>
-                            <ul class="widget-body filter-items search-ul">
-                                <li><a href="#">Bags</a></li>
-                                <li><a href="#">Sport Shorts</a></li>
-                                <li class="with-ul show">
-                                    <a href="#">Clothing</a>
-                                    <ul style="display: block">
-                                        <li><a href="#">Summer sale</a></li>
-                                        <li><a href="#">Shirts</a></li>
-                                        <li><a href="#">Trunks</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Shoes</a></li>
-                                <li class="with-ul">
-                                    <a href="#">Sweaters</a>
-                                    <ul>
-                                        <li><a href="#">T-Shirts</a></li>
-                                        <li><a href="#">Dress</a></li>
-                                        <li><a href="#">Blouse</a></li>
-                                    </ul>
-                                </li>
-                                <li class="with-ul">
-                                    <a href="#">Fashion</a>
-                                    <ul>
-                                        <li><a href="#">Trousers</a></li>
-                                        <li><a href="#">Jacket</a></li>
-                                        <li><a href="#">Caps</a></li>
-                                    </ul>
-                                </li>
-                                <li class="with-ul">
-                                    <a href="#">Women</a>
-                                    <ul>
-                                        <li><a href="#">Summer sales</a></li>
-                                        <li><a href="#">Shirts</a></li>
-                                        <li><a href="#">Trunks</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            @Html.Raw(Model.Categories.GetCategoriesRaw())
                         </div>
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">Price</h3>
@@ -91,26 +56,28 @@
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">Size</h3>
                             <ul class="widget-body filter-items">
-                                <li><a href="#">Small<span>(2)</span></a></li>
-                                <li><a href="#">Medium<span>(1)</span></a></li>
-                                <li><a href="#">Large<span>(9)</span></a></li>
-                                <li><a href="#">Extra Large<span>(1)</span></a></li>
+                                @foreach (Size item in Model.Sizes)
+                                {
+                                    <li><a href="#">@item.Name@*<span>(2)</span>*@</a></li>
+                                }
                             </ul>
                         </div>
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">Color</h3>
                             <ul class="widget-body filter-items">
-                                <li><a href="#">Black<span>(2)</span></a></li>
-                                <li><a href="#">Blue<span>(1)</span></a></li>
-                                <li><a href="#">Green<span>(9)</span></a></li>
+                                @foreach (Color item in Model.Colors)
+                                {
+                                    <li><a href="#">@item.Name@*<span>(2)</span>*@</a></li>
+                                }
                             </ul>
                         </div>
                         <div class="widget widget-collapsible">
                             <h3 class="widget-title">Brands</h3>
                             <ul class="widget-body filter-items">
-                                <li><a href="#">Black<span>(2)</span></a></li>
-                                <li><a href="#">Blue<span>(1)</span></a></li>
-                                <li><a href="#">Green<span>(9)</span></a></li>
+                                @foreach (Brand item in Model.Brands)
+                                {
+                                    <li><a href="#">@item.Name@*<span>(2)</span>*@</a></li>
+                                }
                             </ul>
                         </div>
 

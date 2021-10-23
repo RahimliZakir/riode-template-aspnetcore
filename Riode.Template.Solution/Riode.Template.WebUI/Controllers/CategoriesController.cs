@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Riode.Template.WebUI.Models.DataContext;
+using Riode.Template.WebUI.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +11,28 @@ namespace Riode.Template.WebUI.Controllers
 {
     public class CategoriesController : Controller
     {
-        public IActionResult Index()
+        readonly RiodeDbContext db;
+
+        public CategoriesController(RiodeDbContext db)
         {
-            return View();
+            this.db = db;
+        }
+
+        async public Task<IActionResult> Index()
+        {
+            var viewModel = new CategoryViewModel();
+
+            viewModel.Categories = await db.Categories
+                                  .Include(c => c.Children)
+                                  .ThenInclude(c => c.Children) // TehnInclude Include elediyimiz Children'in ichindeki Children-lari getirecek qatman-qatman gedirik!
+                                  .Where(c => c.DeletedDate == null)
+                                  .ToListAsync();
+
+            viewModel.Brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
+            viewModel.Colors = await db.Colors.Where(c => c.DeletedDate == null).ToListAsync();
+            viewModel.Sizes = await db.Sizes.Where(s => s.DeletedDate == null).ToListAsync();
+
+            return View(viewModel);
         }
 
         // Variations - 1
@@ -84,7 +106,7 @@ namespace Riode.Template.WebUI.Controllers
         public IActionResult ListMode()
         {
             return View();
-        } 
+        }
         // Variations - 1
     }
 }
