@@ -30,6 +30,11 @@
     {
       "library": "sweetalert@2.1.2",
       "destination": "wwwroot/libraries/sweetalert/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "bootstrap-icons@1.6.1",
+      "destination": "wwwroot/libraries/bootstrap-icons/"
     }
   ]
 }

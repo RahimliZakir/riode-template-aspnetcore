@@ -88,9 +88,11 @@ namespace Riode.Template.WebUI.Controllers
             });
         }
 
-        public IActionResult Faqs()
+        async public Task<IActionResult> Faqs()
         {
-            return View();
+            IEnumerable<Faq> data = await db.Faqs.Where(f => f.DeletedDate == null).ToListAsync();
+
+            return View(data);
         }
 
         public IActionResult Error404()
