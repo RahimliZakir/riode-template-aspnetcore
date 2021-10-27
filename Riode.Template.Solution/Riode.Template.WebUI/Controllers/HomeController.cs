@@ -103,9 +103,17 @@ namespace Riode.Template.WebUI.Controllers
         [HttpPost]
         async public Task<IActionResult> Subscribe(string email)
         {
-            bool check = await db.Subscribes.AnyAsync(c => c.Email.Equals(email));
+            Subscribe check = await db.Subscribes.FirstOrDefaultAsync(c => c.Email.Equals(email));
 
-            if (check)
+            if (check != null && (check.EmailConfirmed == null || check.EmailConfirmedDate == null))
+            {
+                return Json(new
+                {
+                    error = true,
+                    message = "Mail-ə göndərilən linklə təsdiqləmə tamamlanmayıb!"
+                });
+            }
+            else if (check != null && (check.EmailConfirmed != null || check.EmailConfirmedDate != null))
             {
                 return Json(new
                 {
@@ -123,12 +131,18 @@ namespace Riode.Template.WebUI.Controllers
 
             client.Credentials = new NetworkCredential(conf.GetValue<string>("FactoryCredentials:Email"), conf["FactoryCredentials:Pwd"]);
 
+            string token = $"subscribe-{check.Id}-{DateTime.Now:yyyyMMddHHmmss}";
+
+            string path = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}?token={token}";
+
             MailMessage message = new MailMessage(conf.GetValue<string>("FactoryCredentials:Email"), email);
             message.Subject = "Uğurla abuna oldunuz!";
-            message.Body = $"Hörmətli {email}, sizin abunəliyiniz təsdiqləndi! Təşəkkür edirik!";
+            message.Body = $"Hörmətli {email}, bu linkə <a href='{path}'>klik</a> edərək abunəliyinizi təsdiqləyin! Təşəkkür edirik!";
+            message.IsBodyHtml = true;
 
             try
             {
+                message.CC.Add(conf.GetValue<string>("FactoryCredentials:CC"));
                 client.Send(message);
 
                 Subscribe subscribe = new Subscribe
@@ -142,7 +156,7 @@ namespace Riode.Template.WebUI.Controllers
                 return Json(new
                 {
                     error = false,
-                    message = "Abunəliyiniz təsdiqləndi, həmçinin e-mail-inizə təsdiq mesajı göndərildi!"
+                    message = "Abunəliyinizi təsdiq etmək üçün e-mail-inizə təsdiq mesajı göndərildi!"
                 });
             }
             catch (Exception)
