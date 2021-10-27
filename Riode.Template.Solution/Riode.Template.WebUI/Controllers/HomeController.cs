@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Riode.Template.WebUI.AppCode.Extensions;
 using Riode.Template.WebUI.Models.DataContext;
 using Riode.Template.WebUI.Models.Entity;
 using System;
@@ -131,18 +132,21 @@ namespace Riode.Template.WebUI.Controllers
 
             client.Credentials = new NetworkCredential(conf.GetValue<string>("FactoryCredentials:Email"), conf["FactoryCredentials:Pwd"]);
 
-            string token = $"subscribe-{check.Id}-{DateTime.Now:yyyyMMddHHmmss}";
+            string token = $"subscribe-{email}-{DateTime.Now:yyyyMMddHHmmss}";
 
-            string path = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}?token={token}";
+            // chipertext
+            token = token.Encrypt();
+
+            string path = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/subscribe-confirm/?token={token}";
 
             MailMessage message = new MailMessage(conf.GetValue<string>("FactoryCredentials:Email"), email);
-            message.Subject = "Uğurla abuna oldunuz!";
+            message.Subject = "Abunəliyi təsdiqləmə mesajı!";
             message.Body = $"Hörmətli {email}, bu linkə <a href='{path}'>klik</a> edərək abunəliyinizi təsdiqləyin! Təşəkkür edirik!";
             message.IsBodyHtml = true;
 
             try
             {
-                message.CC.Add(conf.GetValue<string>("FactoryCredentials:CC"));
+                //message.CC.Add(conf.GetValue<string>("FactoryCredentials:CC"));
                 client.Send(message);
 
                 Subscribe subscribe = new Subscribe
@@ -167,6 +171,30 @@ namespace Riode.Template.WebUI.Controllers
                     message = "Məlumatlar yaddaşda saxlanılan zaman xəta baş verdi!"
                 });
             }
+        }
+
+        [Route("subscribe-confirm")]
+        async public Task<IActionResult> ConfirmSubscription(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return Json("Xəta baş verdi!");
+            }
+
+            token = token.Decrypt();
+
+            string[] datas = token.Split(new[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string subsEmail = datas[1];
+
+            Subscribe selectedSubs = await db.Subscribes.FirstOrDefaultAsync(s => s.Email.Equals(subsEmail));
+
+            selectedSubs.EmailConfirmed = true;
+            selectedSubs.EmailConfirmedDate = DateTime.UtcNow.AddHours(4);
+
+            await db.SaveChangesAsync();
+
+            return View();
         }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Riode.Template.WebUI.AppCode.Extensions;
 using Riode.Template.WebUI.Models.DataContext;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ namespace Riode.Template.WebUI
         public Startup(IConfiguration conf)
         {
             this.conf = conf;
+
+            string text = "salam";
+
+            string chiper = text.Encrypt();
+
+            text = chiper.Decrypt();
         }
 
         public void ConfigureServices(IServiceCollection services)

@@ -42,6 +42,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" type="text/css" href="assets/css/demo23.min.css">
     <link rel="stylesheet" href="libraries/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="libraries/toastr.js/toastr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.1/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="assets/css/style.min.css" />
     <style>
@@ -662,6 +663,8 @@
     <script src="assets/vendor/isotope/isotope.pkgd.min.js"></script>
     <script src="assets/vendor/jquery.plugin/jquery.plugin.min.js"></script>
     <script src="assets/vendor/jquery.countdown/jquery.countdown.min.js"></script>
+    <script src="libraries/toastr.js/toastr.min.js"></script>
+    <script src="libraries/toastr.js/toastr.customization.js"></script>
     <!-- Main JS File -->
     <script src="assets/js/main.min.js"></script>
 
@@ -689,9 +692,12 @@
                     data: serialized,
                     success: function (successMsg) {
                         if (successMsg.error == false) {
-                            alert(successMsg.message);
-                            $(input).val("");
+                            toastr.success(successMsg.message);
+                            e.currentTarget.reset();
+                            return;
                         }
+
+                        toastr.error(successMsg.message);
                     },
                     error: function (errorMsg) {
                         console.log(errorMsg);
@@ -755,7 +761,7 @@
         else {
             console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
         }
-                                                                    // ]]>
+                                                                        // ]]>
     </script>
 </body>
 </html>
