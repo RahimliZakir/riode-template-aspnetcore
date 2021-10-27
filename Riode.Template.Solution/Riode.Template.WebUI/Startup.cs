@@ -54,11 +54,9 @@ namespace Riode.Template.WebUI
             {
                 endpoints.MapGet("/comingsoon.html", async (context) =>
                 {
-                    using (StreamReader sr = new StreamReader("views/static/coming-soon.html"))
-                    {
-                        context.Response.ContentType = "text/html";
-                        await context.Response.WriteAsync(sr.ReadToEnd());
-                    }
+                    using StreamReader sr = new StreamReader("views/static/coming-soon.html");
+                    context.Response.ContentType = "text/html";
+                    await context.Response.WriteAsync(sr.ReadToEnd());
                 });
 
                 endpoints.MapControllerRoute(

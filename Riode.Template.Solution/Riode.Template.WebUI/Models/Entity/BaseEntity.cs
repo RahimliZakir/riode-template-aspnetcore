@@ -6,19 +6,8 @@ using System.Threading.Tasks;
 
 namespace Riode.Template.WebUI.Models.Entity
 {
-    public class BaseEntity
+    public class BaseEntity : HistoryWatch
     {
         public int Id { get; set; }
-
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.AddHours(4);
-
-#nullable enable
-        public int? CreatedByUserId { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
-
-        public int? DeletedByUserId { get; set; }
-#nullable disable
     }
 }

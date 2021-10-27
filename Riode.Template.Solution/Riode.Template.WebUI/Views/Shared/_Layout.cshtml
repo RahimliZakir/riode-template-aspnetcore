@@ -1,4 +1,9 @@
-﻿
+﻿@inject RiodeDbContext db;
+
+@{
+    IEnumerable<AppInfo> appInfos = db.AppInfos.ToList();
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -669,10 +674,12 @@
 
             if ($(input).val().length <= 0) {
                 $(input).addClass('is-invalid');
+                $(input).css('border', '1px solid red');
                 return;
             }
             else {
                 $(input).removeClass('is-invalid');
+                $(input).css('border', 'none');
 
                 let serialized = $(e.currentTarget).serialize();
 
@@ -748,7 +755,7 @@
         else {
             console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
         }
-                                                            // ]]>
+                                                                    // ]]>
     </script>
 </body>
 </html>

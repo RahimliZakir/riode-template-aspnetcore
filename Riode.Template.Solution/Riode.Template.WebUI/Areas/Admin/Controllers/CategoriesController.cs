@@ -23,7 +23,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Category> data = await _context.Categories
-                                               .Include(c => c.Parent)
+                                               .Include(c => c.Children)
                                                .Where(m => m.DeletedDate == null)
                                                .ToListAsync();
 
@@ -38,7 +38,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             }
 
             Category category = await _context.Categories
-                                .Include(c => c.Parent)
+                                .Include(c => c.Children)
                                 .FirstOrDefaultAsync(m => m.Id == id && m.DeletedDate == null);
 
             if (category == null)

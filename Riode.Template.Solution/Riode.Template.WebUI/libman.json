@@ -35,6 +35,14 @@
       "provider": "jsdelivr",
       "library": "bootstrap-icons@1.6.1",
       "destination": "wwwroot/libraries/bootstrap-icons/"
+    },
+    {
+      "library": "jquery-treegrid@0.2.0",
+      "destination": "wwwroot/libraries/jquery-treegrid/"
+    },
+    {
+      "library": "select2@4.0.13",
+      "destination": "wwwroot/libraries/select2/"
     }
   ]
 }

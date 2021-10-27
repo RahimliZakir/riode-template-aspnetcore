@@ -22,6 +22,9 @@ namespace Riode.Template.WebUI.Models.DataContext
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<AppInfo> AppInfos { get; set; }
+        public DbSet<Specification> Specifications { get; set; }
+        public DbSet<SpecificationCategoryCollection> SpecificationCategoryCollections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +37,15 @@ namespace Riode.Template.WebUI.Models.DataContext
             builder.Entity<Subscribe>()
                    .Property(c => c.SubscribeDate)
                    .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
+
+            builder.Entity<AppInfo>()
+                 .Property(c => c.CreatedDate)
+                 .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
+
+            builder.Entity<SpecificationCategoryCollection>(e =>
+            {
+                e.HasKey(k => new { k.SpecificationId, k.CategoryId });
+            });
         }
     }
 }

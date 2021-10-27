@@ -4,6 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
+@section css{
+    <link rel="stylesheet" href="libraries/jquery-treegrid/css/jquery.treegrid.min.css" />
+    <style>
+        .table td {
+            vertical-align: middle;
+        }
+    </style>
+}
+
 <div class="card">
     <div class="card-header row align-items-center justify-content-between">
         <div class="table-infos">
@@ -26,11 +35,10 @@
             }
             else
             {
-                <table class="table">
+                <table class="table tree">
                     <thead>
                         <tr>
                             <th>Id: </th>
-                            <th>Parent: </th>
                             <th>Name: </th>
                             <th>Description: </th>
                             <th>Created Date: </th>
@@ -38,11 +46,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (Category item in Model)
+                        @foreach (Category item in Model.Where(c => c.ParentId == null))
                         {
-                            <tr>
+                            <tr class="treegrid-@item.Id treegrid-parent-@item.ParentId">
                                 <th scope="row">@item.Id</th>
-                                <th>@item.Parent</th>
                                 <td>@item.Name</td>
                                 <td>@item.Description?.EllipseText()</td>
                                 <td>@item.CreatedDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
@@ -52,6 +59,21 @@
                                     <a style="cursor: pointer; color: white;" class="btn btn-danger category-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
+
+                            foreach (var child in item.GetChildCategories())
+                            {
+                                <tr class="treegrid-@child.Id treegrid-parent-@child.ParentId">
+                                    <th scope="row">@child.Id</th>
+                                    <td>@child.Name</td>
+                                    <td>@child.Description?.EllipseText()</td>
+                                    <td>@child.CreatedDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                                    <td style="float: right;">
+                                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@child.Id"><i class="fas fa-pencil-alt"></i></a>
+                                        <a asp-action="Details" class="btn btn-primary" asp-route-id="@child.Id"><i class="far fa-eye"></i></a>
+                                        <a style="cursor: pointer; color: white;" class="btn btn-danger category-btn-del" data-del-id="@child.Id"><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -62,6 +84,7 @@
 
 @section scripts{
     <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="libraries/jquery-treegrid/js/jquery.treegrid.min.js"></script>
     <script>
         $(function () {
             $('.category-btn-del').click((e) => {
@@ -100,7 +123,18 @@
                     )
                 }
             })
-        });
+            });
+
+            $('.tree').treegrid();
+
+            $('.tree tr').removeClass('treegrid-expanded').addClass('treegrid-collapsed')
+                .find('.treegrid-expander.treegrid-expander-expanded')
+                .removeClass('treegrid-expander-expanded')
+                .addClass('treegrid-expander-collapsed');
+
+            $('.tree tr[class*=treegrid-parent]').css('display', 'none');
+
+
         });
     </script>
 }
