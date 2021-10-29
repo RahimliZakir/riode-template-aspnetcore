@@ -1,0 +1,36 @@
+﻿.select2-container--default .select2-selection--single .select2-selection__rendered {
+    background-color: unset;
+}
+
+.selection > .select2-selection.select2-selection--single {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    font-size: 16px;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+}
+
+.select2-container--default .select2-selection--single {
+    border: none;
+}
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        padding: .375rem .75rem;
+    }
+
+.select2-selection__arrow {
+    height: 35px !important;
+    top: 1px !important;
+    right: 3px !important;
+}

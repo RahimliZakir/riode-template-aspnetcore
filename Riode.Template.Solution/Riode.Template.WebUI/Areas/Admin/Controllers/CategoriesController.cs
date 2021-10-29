@@ -40,6 +40,11 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             Category category = await _context.Categories
                                 .Include(c => c.Children)
                                 .FirstOrDefaultAsync(m => m.Id == id && m.DeletedDate == null);
+#nullable enable
+            Category? parent = await _context.Categories.FirstOrDefaultAsync(c => c.Id == category.ParentId);
+
+            ViewBag.Parent = parent?.Name;
+#nullable disable
 
             if (category == null)
             {

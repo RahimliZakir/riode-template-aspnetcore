@@ -4,12 +4,17 @@
     ViewData["Title"] = "Edit";
 }
 
+@section css{
+    <link rel="stylesheet" href="libraries/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="libraries/select2/css/select2.override.css" />
+}
+
 <form method="post" asp-action="Edit">
     <input type="hidden" asp-for="Id" />
     <input type="hidden" asp-for="CreatedDate" />
     <div class="form-group">
         <label asp-for="ParentId" class="control-label"></label>
-        <select asp-for="ParentId" class="form-control" asp-items="ViewBag.ParentId">
+        <select class="select2 form-control" asp-for="ParentId" asp-items="ViewBag.ParentId">
             <option value="" selected disabled>---Seçilməyib---</option>
         </select>
     </div>
@@ -28,5 +33,13 @@
 
 @section scripts{
     <script src="libraries/jquery-validate/jquery.validate.min.js"></script>
-    <script src="libraries/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js" k></script>
+    <script src="libraries/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="libraries/jquery-validate/jquery.validate.min.js"></script>
+    <script src="libraries/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="libraries/select2/js/select2.full.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+        });
+    </script>
 }
