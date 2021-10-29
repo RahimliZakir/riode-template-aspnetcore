@@ -24,7 +24,9 @@ namespace Riode.Template.WebUI.Controllers
 
             viewModel.Categories = await db.Categories
                                   .Include(c => c.Children)
-                                  .ThenInclude(c => c.Children) // TehnInclude Include elediyimiz Children'in ichindeki Children-lari getirecek qatman-qatman gedirik!
+                                  // Eger birinci qatmandaki Include'a hansisa shert yazmishiqsa, o zaman ThenInclude-dan istifade etmeliyik
+                                  // yox eger yazmamishiqsa Bir Include bes edir Recursior uchun
+                                  //.ThenInclude(c => c.Children) // TehnInclude Include elediyimiz Children'in ichindeki Children-lari getirecek qatman-qatman gedirik!
                                   .Where(c => c.DeletedDate == null)
                                   .ToListAsync();
 

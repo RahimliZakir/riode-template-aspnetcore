@@ -1,4 +1,5 @@
-﻿using Riode.Template.WebUI.Models.Entity;
+﻿using Microsoft.AspNetCore.Html;
+using Riode.Template.WebUI.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,23 @@ namespace Riode.Template.WebUI.AppCode.Extensions
 {
     public static partial class Extension
     {
-        public static string GetCategoriesRaw(this IEnumerable<Category> categories)
+        //Recursion
+        public static IHtmlContent GetCategoriesRaw(this IEnumerable<Category> categories)
         {
             if (categories == null || !categories.Any())
-                return "";
+                return HtmlString.Empty;
 
             StringBuilder sb = new StringBuilder();
             sb.Append("<ul class='widget-body filter-items search-ul'>");
 
-            foreach (Category category in categories)
+            foreach (Category category in categories.Where(c => c.ParentId == null && c.DeletedDate == null))
             {
                 FillCategoriesRaw(category);
             }
 
             sb.Append("</ul>");
 
-            return sb.ToString();
+            return new HtmlString(sb.ToString());
 
             void FillCategoriesRaw(Category category)
             {

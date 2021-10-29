@@ -48,7 +48,7 @@
                     <tbody>
                         @foreach (Category item in Model.Where(c => c.ParentId == null))
                         {
-                            <tr class="treegrid-@item.Id treegrid-parent-@item.ParentId">
+                            <tr class="treegrid-@item.Id">
                                 <th scope="row">@item.Id</th>
                                 <td>@item.Name</td>
                                 <td>@item.Description?.EllipseText()</td>
@@ -60,7 +60,7 @@
                                 </td>
                             </tr>
 
-                            foreach (var child in item.GetChildCategories())
+                            foreach (Category child in item.GetChildCategories())
                             {
                                 <tr class="treegrid-@child.Id treegrid-parent-@child.ParentId">
                                     <th scope="row">@child.Id</th>
@@ -87,7 +87,16 @@
     <script src="libraries/jquery-treegrid/js/jquery.treegrid.min.js"></script>
     <script>
         $(function () {
-            $('.category-btn-del').click((e) => {
+            $('.tree').treegrid();
+
+            $('.tree tr').removeClass('treegrid-expanded').addClass('treegrid-collapsed')
+                .find('.treegrid-expander.treegrid-expander-expanded')
+                .removeClass('treegrid-expander-expanded')
+                .addClass('treegrid-expander-collapsed');
+
+            $('.tree tr[class*=treegrid-parent]').css('display', 'none');
+
+             $('.category-btn-del').click((e) => {
             let delId = $(e.currentTarget).data('del-id');
 
             Swal.fire({
@@ -124,17 +133,6 @@
                 }
             })
             });
-
-            $('.tree').treegrid();
-
-            $('.tree tr').removeClass('treegrid-expanded').addClass('treegrid-collapsed')
-                .find('.treegrid-expander.treegrid-expander-expanded')
-                .removeClass('treegrid-expander-expanded')
-                .addClass('treegrid-expander-collapsed');
-
-            $('.tree tr[class*=treegrid-parent]').css('display', 'none');
-
-
         });
     </script>
 }
