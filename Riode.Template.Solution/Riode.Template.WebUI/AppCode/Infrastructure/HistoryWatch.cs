@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Riode.Template.WebUI.Models.Entity
+namespace Riode.Template.WebUI.AppCode.Infrastructure
 {
     public class HistoryWatch
     {

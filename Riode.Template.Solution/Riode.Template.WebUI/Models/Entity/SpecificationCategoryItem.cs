@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Riode.Template.WebUI.AppCode.Infrastructure;
 
 namespace Riode.Template.WebUI.Models.Entity
 {
-    public class SpecificationCategoryCollection : HistoryWatch
+    public class SpecificationCategoryItem : HistoryWatch
     {
         public int SpecificationId { get; set; }
 

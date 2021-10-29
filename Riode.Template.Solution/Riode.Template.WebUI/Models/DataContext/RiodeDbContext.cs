@@ -24,7 +24,7 @@ namespace Riode.Template.WebUI.Models.DataContext
         public DbSet<Category> Categories { get; set; }
         public DbSet<AppInfo> AppInfos { get; set; }
         public DbSet<Specification> Specifications { get; set; }
-        public DbSet<SpecificationCategoryCollection> SpecificationCategoryCollections { get; set; }
+        public DbSet<SpecificationCategoryItem> SpecificationCategoryCollections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -42,9 +42,9 @@ namespace Riode.Template.WebUI.Models.DataContext
                  .Property(c => c.CreatedDate)
                  .HasDefaultValueSql("DATEADD(HOUR, 4, GETUTCDATE())");
 
-            builder.Entity<SpecificationCategoryCollection>(e =>
+            builder.Entity<SpecificationCategoryItem>(e =>
             {
-                e.HasKey(k => new { k.SpecificationId, k.CategoryId });
+                e.HasKey(k => new { k.CategoryId, k.SpecificationId });
             });
         }
     }

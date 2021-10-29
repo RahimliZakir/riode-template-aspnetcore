@@ -10,8 +10,8 @@ using Riode.Template.WebUI.Models.DataContext;
 namespace Riode.Template.WebUI.Migrations
 {
     [DbContext(typeof(RiodeDbContext))]
-    [Migration("20211024065531_Collection")]
-    partial class Collection
+    [Migration("20211029091950_CHeckingg")]
+    partial class CHeckingg
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -286,12 +286,12 @@ namespace Riode.Template.WebUI.Migrations
                     b.ToTable("Specifications");
                 });
 
-            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.SpecificationCategoryCollection", b =>
+            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.SpecificationCategoryItem", b =>
                 {
-                    b.Property<int>("SpecificationId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("SpecificationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CreatedByUserId")
@@ -306,9 +306,9 @@ namespace Riode.Template.WebUI.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("SpecificationId", "CategoryId");
+                    b.HasKey("CategoryId", "SpecificationId");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("SpecificationId");
 
                     b.ToTable("SpecificationCategoryCollections");
                 });
@@ -349,7 +349,7 @@ namespace Riode.Template.WebUI.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.SpecificationCategoryCollection", b =>
+            modelBuilder.Entity("Riode.Template.WebUI.Models.Entity.SpecificationCategoryItem", b =>
                 {
                     b.HasOne("Riode.Template.WebUI.Models.Entity.Category", "Category")
                         .WithMany()
