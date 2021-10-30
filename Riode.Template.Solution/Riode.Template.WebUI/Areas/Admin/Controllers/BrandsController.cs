@@ -63,7 +63,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 return View(brand);
             }
 
-
+            db.Brands.Update(brand);
             await db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

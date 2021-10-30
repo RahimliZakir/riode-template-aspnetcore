@@ -24,11 +24,11 @@ namespace Riode.Template.WebUI
         {
             this.conf = conf;
 
-            string text = "salam";
+            //string text = "salam";
 
-            string chiper = text.Encrypt();
+            //string chiper = text.Encrypt();
 
-            text = chiper.Decrypt();
+            //text = chiper.Decrypt();
         }
 
         public void ConfigureServices(IServiceCollection services)

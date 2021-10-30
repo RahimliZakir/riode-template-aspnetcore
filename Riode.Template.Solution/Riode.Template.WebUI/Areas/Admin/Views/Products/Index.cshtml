@@ -4,6 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
+@section css{
+    <style>
+        .table tbody td {
+            height: 175px
+        }
+    </style>
+}
+
 <div class="card">
     <div class="card-header row align-items-center justify-content-between">
         <div class="table-infos">
@@ -32,7 +40,7 @@
                             <th>Id: </th>
                             <th>Stock Keeping Unit: </th>
                             <th>Brand: </th>
-                            <th>Image: </th>
+                            <th style="width: 300px;">Image: </th>
                             <th>Name: </th>
                             <th>Short Description: </th>
                             <th>Description: </th>
@@ -46,15 +54,19 @@
                             <tr>
                                 <td>@item.Id</td>
                                 <td>@item.StockKeepingUnit</td>
-                                <td>@item.Brand</td>
-                                <td><img src="uploads/products/@item.ProductImages.FirstOrDefault(pi=>pi.IsMain)?.ImagePath" /></td>
+                                <td>@item.Brand.Name</td>
+                                <td>
+                                    <div class="img-div" style="width: 300px;">
+                                        <img style="width:100%;height: 150px;object-fit: cover;" src="uploads/products/@item.ProductImages.FirstOrDefault(pi => pi.IsMain)?.ImagePath" />
+                                    </div>
+                                </td>
                                 <td>@item.Name</td>
                                 <td>@item.ShortDescription</td>
                                 <td>@item.Description</td>
                                 <td>@item.CreatedDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
-                                <td style="float: right;">
-                                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
-                                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>
+                                <td style="float: right; display: flex; align-items: center;">
+                                    <a asp-action="Edit" class="btn btn-warning mr-2" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
+                                    <a asp-action="Details" class="btn btn-primary mr-2" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>
                                     <a style="cursor: pointer; color: white;" class="btn btn-danger category-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
@@ -70,16 +82,7 @@
     <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
     <script>
         $(function () {
-            $('.tree').treegrid();
-
-            $('.tree tr').removeClass('treegrid-expanded').addClass('treegrid-collapsed')
-                .find('.treegrid-expander.treegrid-expander-expanded')
-                .removeClass('treegrid-expander-expanded')
-                .addClass('treegrid-expander-collapsed');
-
-            $('.tree tr[class*=treegrid-parent]').css('display', 'none');
-
-             $('.category-btn-del').click((e) => {
+          $('.category-btn-del').click((e) => {
             let delId = $(e.currentTarget).data('del-id');
 
             Swal.fire({

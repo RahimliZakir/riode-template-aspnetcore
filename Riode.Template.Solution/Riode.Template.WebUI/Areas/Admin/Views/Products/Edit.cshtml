@@ -10,35 +10,45 @@
     <link rel="stylesheet" href="libraries/select2/css/select2.override.css" />
 }
 
-<form method="post" asp-action="Create" enctype="multipart/form-data">
-    <input type="hidden" />
-    <div class="form-group">
-        <label asp-for="BrandId" class="control-label"></label>
-        <select asp-for="BrandId" class="form-control select2">
-        </select>
-    </div>
-    <div class="form-group">
-        <label asp-for="StockKeepingUnit" class="label-required"></label>
-        <input asp-for="StockKeepingUnit" class="form-control" />
-        <span asp-validation-for="StockKeepingUnit"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Name" class="label-required"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name"></span>
-    </div>
-    <div style="width: 600px;" class="imager-container" id="viewer1" name="files">
-    </div>
-    <div class="form-group">
-        <label asp-for="ShortDescription"></label>
-        <input asp-for="ShortDescription" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <input asp-for="Description" class="form-control" />
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="row align-items-center">
+        <input type="hidden" asp-for="Id" />
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="BrandId" class="control-label">Brand</label>
+                <select asp-for="BrandId" class="form-control select2" asp-items="@ViewBag.BrandId">
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockKeepingUnit" class="label-required"></label>
+                <input asp-for="StockKeepingUnit" class="form-control" />
+                <span asp-validation-for="StockKeepingUnit"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="label-required"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShortDescription">Short Description</label>
+                <input asp-for="ShortDescription" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+        </div>
+        <div class="col-8">
+            <div style="width: 600px;" class="imager-container" id="viewer1" name="files">
+                @foreach (ProductImage item in Model.ProductImages)
+                {
+                    <label thumb-url='/uploads/products/@item.ImagePath' image-id="@item.Id" @(item.IsMain ? "checked='true''" : "")></label>
+                }
+            </div>
+        </div>
     </div>
     <a asp-action="Index" class="btn btn-danger">Geriyə</a>
-    <button class="btn btn-info" type="submit">Əlavə et</button>
+    <button class="btn btn-info" type="submit">Yenilə</button>
 </form>
 
 @section scripts{

@@ -64,7 +64,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Files, StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id")] Product product)
+        public async Task<IActionResult> Create([Bind("Files,StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id")] Product product)
         {
             product.ProductImages = new List<ProductImage>();
 
@@ -120,7 +120,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id,CreatedDate,CreatedByUserId,DeletedDate,DeletedByUserId")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Files,StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id,CreatedDate,CreatedByUserId,DeletedDate,DeletedByUserId")] Product product)
         {
             if (id != product.Id)
             {
@@ -129,6 +129,58 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                IQueryable<Product> entity = db.Products.AsNoTracking().Where(p => p.Id.Equals(id));
+
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+
+                IEnumerable<ProductImage> images = await db.ProductImages.Where(pi => pi.ProductId.Equals(id)).ToListAsync();
+
+                foreach (ProductImage item in images)
+                {
+                    if (product.Files.Any(f => f.File == null && string.IsNullOrWhiteSpace(f.TempPath) && f.Id == item.Id))
+                    {
+                        string path = Path.Combine(env.WebRootPath, "uploads", "products", item.ImagePath);
+
+                        if (System.IO.File.Exists(path) && !string.IsNullOrWhiteSpace(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+
+                        db.ProductImages.Remove(item);
+                    }
+                    else if (product.Files.Any(f => f.IsMain && f.Id == item.Id))
+                    {
+                        item.IsMain = true;
+                    }
+                    else
+                    {
+                        item.IsMain = false;
+                    }
+                }
+
+                product.ProductImages = new List<ProductImage>();
+
+                foreach (ImageItemFormModel item in product.Files.Where(f => f.File != null))
+                {
+                    string ext = Path.GetExtension(item.File.FileName);
+                    string filename = $"product-{Guid.NewGuid().ToString().Replace("-", "")}{ext}";
+                    string fullname = Path.Combine(env.WebRootPath, "uploads", "products", filename);
+
+                    using (FileStream fs = new FileStream(fullname, FileMode.Create, FileAccess.Write))
+                    {
+                        await item.File.CopyToAsync(fs);
+                    }
+
+                    product.ProductImages.Add(new ProductImage
+                    {
+                        ImagePath = filename,
+                        IsMain = item.IsMain
+                    });
+                }
+
                 try
                 {
                     db.Products.Update(product);
