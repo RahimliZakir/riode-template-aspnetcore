@@ -25,6 +25,10 @@ namespace Riode.Template.WebUI.Models.DataContext
         public DbSet<AppInfo> AppInfos { get; set; }
         public DbSet<Specification> Specifications { get; set; }
         public DbSet<SpecificationCategoryItem> SpecificationCategoryCollections { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategoryItem> ProductCategoryItems { get; set; }
+        public DbSet<SpecificationCategoryItem> SpecificationCategoryItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,6 +49,16 @@ namespace Riode.Template.WebUI.Models.DataContext
             builder.Entity<SpecificationCategoryItem>(e =>
             {
                 e.HasKey(k => new { k.CategoryId, k.SpecificationId });
+            });
+
+            builder.Entity<ProductCategoryItem>(e =>
+            {
+                e.HasKey(k => new { k.CategoryId, k.ProductId });
+            });
+
+            builder.Entity<SpecificationProductItem>(e =>
+            {
+                e.HasKey(k => new { k.ProductId, k.SpecificationId });
             });
         }
     }

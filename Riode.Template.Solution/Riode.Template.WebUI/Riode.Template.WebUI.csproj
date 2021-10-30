@@ -19,13 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Views\static\coming-soon.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\libraries\multiple-image\css\" />
+    <Folder Include="wwwroot\libraries\multiple-image\js\" />
+    <Folder Include="wwwroot\libraries\multiple-image\img\" />
   </ItemGroup>
 
 </Project>
