@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Riode.Template.WebUI.AppCode.BinderProviders;
 using Riode.Template.WebUI.AppCode.Extensions;
 using Riode.Template.WebUI.Models.DataContext;
 using System;
@@ -38,7 +39,10 @@ namespace Riode.Template.WebUI
                 //options.LowercaseQueryStrings = true;
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(cfg =>
+            {
+                cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
+            });
 
             services.AddDbContext<RiodeDbContext>(options =>
             {

@@ -28,6 +28,7 @@
     <Folder Include="wwwroot\libraries\multiple-image\css\" />
     <Folder Include="wwwroot\libraries\multiple-image\js\" />
     <Folder Include="wwwroot\libraries\multiple-image\img\" />
+    <Folder Include="wwwroot\uploads\products\" />
   </ItemGroup>
 
 </Project>

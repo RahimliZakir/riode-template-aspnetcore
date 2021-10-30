@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Riode.Template.WebUI.Areas.Admin.Models.FormModel;
 using Riode.Template.WebUI.Models.DataContext;
 using Riode.Template.WebUI.Models.Entity;
 
@@ -21,17 +23,18 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
         public ProductsController(RiodeDbContext db, IWebHostEnvironment env)
         {
             this.db = db;
+            this.env = env;
         }
 
-        // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
-            IIncludableQueryable<Product, Brand> riodeDbContext = db.Products.Include(p => p.Brand);
+            IIncludableQueryable<Product, ICollection<ProductImage>> riodeDbContext = db.Products
+                                                                                      .Include(p => p.Brand)
+                                                                                      .Include(p => p.ProductImages);
 
             return View(await riodeDbContext.ToListAsync());
         }
 
-        // GET: Admin/Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,9 +42,11 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var product = await db.Products
-                .Include(p => p.Brand)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            Product product = await db.Products
+                                    .Include(p => p.Brand)
+                                    .Include(p => p.ProductImages)
+                                    .FirstOrDefaultAsync(m => m.Id == id);
+
             if (product == null)
             {
                 return NotFound();
@@ -50,31 +55,50 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             return View(product);
         }
 
-        // GET: Admin/Products/Create
         public IActionResult Create()
         {
             ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name");
+
             return View();
         }
 
-        // POST: Admin/Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id,CreatedDate,CreatedByUserId,DeletedDate,DeletedByUserId")] Product product)
+        public async Task<IActionResult> Create([Bind("Files, StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id")] Product product)
         {
+            product.ProductImages = new List<ProductImage>();
+
+            foreach (ImageItemFormModel item in product.Files)
+            {
+                string ext = Path.GetExtension(item.File.FileName);
+                string filename = $"product-{Guid.NewGuid().ToString().Replace("-", "")}{ext}";
+                string fullname = Path.Combine(env.WebRootPath, "uploads", "products", filename);
+
+                using (FileStream fs = new FileStream(fullname, FileMode.Create, FileAccess.Write))
+                {
+                    await item.File.CopyToAsync(fs);
+                }
+
+                product.ProductImages.Add(new ProductImage
+                {
+                    ImagePath = filename,
+                    IsMain = item.IsMain
+                });
+            }
+
+
             if (ModelState.IsValid)
             {
-                db.Add(product);
+                db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", product.BrandId);
+
             return View(product);
         }
 
-        // GET: Admin/Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,18 +106,18 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var product = await db.Products.FindAsync(id);
+            Product product = await db.Products.Include(p => p.ProductImages).FirstOrDefaultAsync(c => c.Id.Equals(id));
+
             if (product == null)
             {
                 return NotFound();
             }
+
             ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", product.BrandId);
+
             return View(product);
         }
 
-        // POST: Admin/Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StockKeepingUnit,Name,ShortDescription,BrandId,Description,Id,CreatedDate,CreatedByUserId,DeletedDate,DeletedByUserId")] Product product)
@@ -107,7 +131,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             {
                 try
                 {
-                    db.Update(product);
+                    db.Products.Update(product);
                     await db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -123,37 +147,20 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", product.BrandId);
-            return View(product);
-        }
-
-        // GET: Admin/Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await db.Products
-                .Include(p => p.Brand)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
 
             return View(product);
         }
 
-        // POST: Admin/Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await db.Products.FindAsync(id);
+            Product product = await db.Products.FindAsync(id);
+
             db.Products.Remove(product);
             await db.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

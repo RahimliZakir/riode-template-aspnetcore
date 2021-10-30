@@ -1,83 +1,121 @@
-﻿@model IEnumerable<Riode.Template.WebUI.Models.Entity.Product>
+﻿@model IEnumerable<Product>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="card">
+    <div class="card-header row align-items-center justify-content-between">
+        <div class="table-infos">
+            <h5>Basic Table</h5>
+            <span>use class <code>table</code> inside table element</span>
+        </div>
+        <div class="brand-plus-btn">
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            @if (Model.Count() == 0)
+            {
+                <div class="alert alert-warning" role="alert">
+                    Hələ ki, məlumat yoxdur!
+                </div>
+            }
+            else
+            {
+                <table class="table tree">
+                    <thead>
+                        <tr>
+                            <th>Id: </th>
+                            <th>Stock Keeping Unit: </th>
+                            <th>Brand: </th>
+                            <th>Image: </th>
+                            <th>Name: </th>
+                            <th>Short Description: </th>
+                            <th>Description: </th>
+                            <th>Created Date: </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Product item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.StockKeepingUnit</td>
+                                <td>@item.Brand</td>
+                                <td><img src="uploads/products/@item.ProductImages.FirstOrDefault(pi=>pi.IsMain)?.ImagePath" /></td>
+                                <td>@item.Name</td>
+                                <td>@item.ShortDescription</td>
+                                <td>@item.Description</td>
+                                <td>@item.CreatedDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                                <td style="float: right;">
+                                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
+                                    <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>
+                                    <a style="cursor: pointer; color: white;" class="btn btn-danger category-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StockKeepingUnit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShortDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Brand)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedByUserId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedByUserId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockKeepingUnit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShortDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedByUserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeletedByUserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@section scripts{
+    <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+    <script>
+        $(function () {
+            $('.tree').treegrid();
+
+            $('.tree tr').removeClass('treegrid-expanded').addClass('treegrid-collapsed')
+                .find('.treegrid-expander.treegrid-expander-expanded')
+                .removeClass('treegrid-expander-expanded')
+                .addClass('treegrid-expander-collapsed');
+
+            $('.tree tr[class*=treegrid-parent]').css('display', 'none');
+
+             $('.category-btn-del').click((e) => {
+            let delId = $(e.currentTarget).data('del-id');
+
+            Swal.fire({
+                title: 'Silmək istədiyinizə əminsinizmi?',
+                text: "Bu əməliyyat geri qaytarılmayacaqdır!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Bəli, silinsin!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                     $.ajax({
+                         url: `@Url.Action("Delete")/${delId}`,
+                         type: "POST",
+                            success: function (successMsg) {
+                                if (successMsg.error == false) {
+                                    $(e.currentTarget).closest('tr').remove();
+                                    return;
+                                }
+
+                                alert(successMsg.message);
+                            },
+                            error: function (errorMsg) {
+                                alert(errorMsg);
+                            }
+                        });
+
+                    Swal.fire(
+                        'Silindi!',
+                        'Seçdiyiniz məlumatlar silindi.',
+                        'success'
+                    )
+                }
+            })
+            });
+        });
+    </script>
 }
-    </tbody>
-</table>
