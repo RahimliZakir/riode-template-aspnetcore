@@ -24,6 +24,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             IEnumerable<Brand> brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
 
             return View(brands);
+            //return PartialView("_Navbar", brands);
         }
 
         public IActionResult Create()
