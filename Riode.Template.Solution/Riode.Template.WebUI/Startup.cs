@@ -59,6 +59,8 @@ namespace Riode.Template.WebUI
 
             app.UseStaticFiles();
 
+            app.DataSeed().Wait();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
