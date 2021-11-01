@@ -67,7 +67,7 @@
                                 <td style="float: right; display: flex; align-items: center;">
                                     <a asp-action="Edit" class="btn btn-warning mr-2" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
                                     <a asp-action="Details" class="btn btn-primary mr-2" asp-route-id="@item.Id"><i class="far fa-eye"></i></a>
-                                    <a style="cursor: pointer; color: white;" class="btn btn-danger category-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
+                                    <a style="cursor: pointer; color: white;" class="btn btn-danger prod-btn-del" data-del-id="@item.Id"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         }
@@ -82,7 +82,7 @@
     <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
     <script>
         $(function () {
-          $('.category-btn-del').click((e) => {
+            $('.prod-btn-del').click((e) => {
             let delId = $(e.currentTarget).data('del-id');
 
             Swal.fire({

@@ -59,6 +59,7 @@ namespace Riode.Template.WebUI
 
             app.UseStaticFiles();
 
+            //Auto DataSeed
             app.DataSeed().Wait();
 
             app.UseRouting();

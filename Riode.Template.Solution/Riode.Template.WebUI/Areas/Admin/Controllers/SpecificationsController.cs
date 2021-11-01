@@ -23,7 +23,9 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
         // GET: Admin/Specifications
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Specifications.ToListAsync());
+            IEnumerable<Specification> data = await _context.Specifications.Where(s => s.DeletedDate == null).ToListAsync();
+
+            return View(data);
         }
 
         // GET: Admin/Specifications/Details/5
@@ -117,33 +119,28 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             return View(specification);
         }
 
-        // GET: Admin/Specifications/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var specification = await _context.Specifications
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (specification == null)
-            {
-                return NotFound();
-            }
-
-            return View(specification);
-        }
-
-        // POST: Admin/Specifications/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var specification = await _context.Specifications.FindAsync(id);
-            _context.Specifications.Remove(specification);
+            Specification specification = await _context.Specifications.FirstOrDefaultAsync(s => s.Id == id && s.DeletedDate == null);
+
+            if (specification == null)
+            {
+                return Json(new
+                {
+                    error = true,
+                    message = "Məlumat tapılmadı!"
+                });
+            }
+
+            specification.DeletedDate = DateTime.UtcNow.AddHours(4);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return Json(new
+            {
+                error = false,
+                message = "Seçdiyiniz məlumat uğurla silindi!"
+            });
         }
 
         private bool SpecificationExists(int id)

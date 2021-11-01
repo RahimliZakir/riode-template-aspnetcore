@@ -4,52 +4,31 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+@section css{
+    <link rel="stylesheet" href="libraries/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="libraries/select2/css/select2.override.css" />
+}
 
-<h4>Specification</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="post" asp-action="Create">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-8">
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="label-required"></label>
                 <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description"></label>
                 <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedByUserId" class="control-label"></label>
-                <input asp-for="CreatedByUserId" class="form-control" />
-                <span asp-validation-for="CreatedByUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedDate" class="control-label"></label>
-                <input asp-for="DeletedDate" class="form-control" />
-                <span asp-validation-for="DeletedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedByUserId" class="control-label"></label>
-                <input asp-for="DeletedByUserId" class="form-control" />
-                <span asp-validation-for="DeletedByUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+    <a asp-action="Index" class="btn btn-danger">Geriyə</a>
+    <button class="btn btn-info" type="submit">Əlavə et</button>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+@section scripts{
+    <script src="libraries/jquery-validate/jquery.validate.min.js"></script>
+    <script src="libraries/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="libraries/select2/js/select2.full.min.js"></script>
+}
