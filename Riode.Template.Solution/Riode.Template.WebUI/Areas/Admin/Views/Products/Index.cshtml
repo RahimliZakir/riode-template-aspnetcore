@@ -5,6 +5,7 @@
 }
 
 @section css{
+    <link rel="stylesheet" href="libraries/toastr.js/toastr.min.css" />
     <style>
         .table tbody td {
             height: 175px
@@ -80,6 +81,8 @@
 
 @section scripts{
     <script src="libraries/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="libraries/toastr.js/toastr.min.js"></script>
+    <script src="libraries/toastr.js/toastr.customization.js"></script>
     <script>
         $(function () {
             $('.prod-btn-del').click((e) => {
@@ -101,10 +104,11 @@
                             success: function (successMsg) {
                                 if (successMsg.error == false) {
                                     $(e.currentTarget).closest('tr').remove();
+                                    toastr.success(successMsg.message, "Uğurlu!");
                                     return;
                                 }
 
-                                alert(successMsg.message);
+                                toast.error(successMsg.message, "Xəta!");
                             },
                             error: function (errorMsg) {
                                 alert(errorMsg);

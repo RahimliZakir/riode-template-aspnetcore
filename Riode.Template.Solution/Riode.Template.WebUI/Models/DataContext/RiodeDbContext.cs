@@ -29,6 +29,7 @@ namespace Riode.Template.WebUI.Models.DataContext
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategoryItem> ProductCategoryItems { get; set; }
         public DbSet<SpecificationCategoryItem> SpecificationCategoryItems { get; set; }
+        public DbSet<ProductSizeColorCategoryCollection> ProductSizeColorCategoryCollections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

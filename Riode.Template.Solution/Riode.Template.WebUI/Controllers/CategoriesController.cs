@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Riode.Template.WebUI.Models.DataContext;
+using Riode.Template.WebUI.Models.Entity;
 using Riode.Template.WebUI.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,38 @@ namespace Riode.Template.WebUI.Controllers
             viewModel.Brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
             viewModel.Colors = await db.Colors.Where(c => c.DeletedDate == null).ToListAsync();
             viewModel.Sizes = await db.Sizes.Where(s => s.DeletedDate == null).ToListAsync();
+
+            List<ProductSizeColorCategoryCollection> collectionData = new();
+
+            ProductSizeColorCategoryCollection first = await db.ProductSizeColorCategoryCollections
+                                                               .Include(p => p.Product)
+                                                               .Include(p => p.Product.ProductImages)
+                                                               .Include(p => p.Size)
+                                                               .Include(p => p.Category)
+                                                               .Include(c => c.Color)
+                                                               .FirstOrDefaultAsync(c => c.ProductId == 2);
+
+            collectionData.Add(first);
+
+            ProductSizeColorCategoryCollection second = await db.ProductSizeColorCategoryCollections
+                                                               .Include(p => p.Product)
+                                                               .Include(p => p.Product.ProductImages)
+                                                               .Include(p => p.Size)
+                                                               .Include(p => p.Category)
+                                                               .Include(c => c.Color)
+                                                               .FirstOrDefaultAsync(c => c.ProductId == 3);
+
+            collectionData.Add(second);
+
+            //await db.ProductSizeColorCategoryCollections
+            //       .Include(p => p.Product)
+            //     .Include(p => p.Product.ProductImages)
+            //   .Include(p => p.Size)
+            // .Include(p => p.Category)
+            //.Include(c => c.Category)
+            //.ToListAsync();
+
+            viewModel.ProductSizeColorCategoryCollections = collectionData;
 
             return View(viewModel);
         }

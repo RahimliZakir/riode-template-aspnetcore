@@ -13,9 +13,12 @@ namespace Riode.Template.WebUI.AppCode.Extensions
             if (parent.ParentId != null)
                 yield return parent;
 
-            foreach (Category child in parent.Children.SelectMany(c => c.GetChildCategories()))
+            if (parent.Children != null)
             {
-                yield return child;
+                foreach (Category child in parent.Children.SelectMany(c => c.GetChildCategories()))
+                {
+                    yield return child;
+                }
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                                                                                       .Include(p => p.Brand)
                                                                                       .Include(p => p.ProductImages);
 
-            return View(await riodeDbContext.ToListAsync());
+            return View(await riodeDbContext.Where(p => p.DeletedDate == null).ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -45,7 +45,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             Product product = await db.Products
                                     .Include(p => p.Brand)
                                     .Include(p => p.ProductImages)
-                                    .FirstOrDefaultAsync(m => m.Id == id);
+                                    .FirstOrDefaultAsync(m => m.Id == id && m.DeletedDate.Equals(null));
 
             if (product == null)
             {
@@ -106,7 +106,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Product product = await db.Products.Include(p => p.ProductImages).FirstOrDefaultAsync(c => c.Id.Equals(id));
+            Product product = await db.Products.Include(p => p.ProductImages).FirstOrDefaultAsync(c => c.Id.Equals(id) && c.DeletedDate == null);
 
             if (product == null)
             {
@@ -188,7 +188,7 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!await ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -205,20 +205,39 @@ namespace Riode.Template.WebUI.Areas.Admin.Controllers
             return View(product);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Product product = await db.Products.FindAsync(id);
+            if (id <= 0)
+                return Json(new
+                {
+                    error = true,
+                    message = "Id tapılmadı!"
+                });
 
-            db.Products.Remove(product);
+            Product product = await db.Products.FirstOrDefaultAsync(p => p.Id.Equals(id));
+
+            if (product == null)
+                return Json(new
+                {
+                    error = true,
+                    message = "Id tapılmadı!"
+                });
+
+
+            product.DeletedDate = DateTime.UtcNow.AddHours(4);
             await db.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return Json(new
+            {
+                error = false,
+                message = "Məhsul uğurla silindi!"
+            });
         }
 
-        private bool ProductExists(int id)
+        async private Task<bool> ProductExists(int id)
         {
-            return db.Products.Any(e => e.Id == id);
+            return await db.Products.AnyAsync(e => e.Id == id && e.DeletedDate == null);
         }
     }
 }

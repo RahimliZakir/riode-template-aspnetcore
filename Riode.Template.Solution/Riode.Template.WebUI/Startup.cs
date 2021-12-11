@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,13 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Riode.Template.WebUI.AppCode.BinderProviders;
-using Riode.Template.WebUI.AppCode.Extensions;
 using Riode.Template.WebUI.Models.DataContext;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Riode.Template.WebUI
 {
@@ -43,6 +39,8 @@ namespace Riode.Template.WebUI
             {
                 cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
             });
+
+            services.AddMediatR(typeof(Startup));
 
             services.AddDbContext<RiodeDbContext>(options =>
             {

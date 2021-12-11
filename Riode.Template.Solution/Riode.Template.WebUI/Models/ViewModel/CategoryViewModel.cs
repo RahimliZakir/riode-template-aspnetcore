@@ -15,5 +15,7 @@ namespace Riode.Template.WebUI.Models.ViewModel
         public IEnumerable<Color> Colors { get; set; }
 
         public IEnumerable<Brand> Brands { get; set; }
+
+        public IEnumerable<ProductSizeColorCategoryCollection> ProductSizeColorCategoryCollections { get; set; }
     }
 }

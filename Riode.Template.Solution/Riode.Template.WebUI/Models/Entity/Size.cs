@@ -15,5 +15,7 @@ namespace Riode.Template.WebUI.Models.Entity
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public virtual ICollection<ProductSizeColorCategoryCollection> ProductSizeColorCategoryCollections { get; set; }
     }
 }

@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Riode.Template.WebUI.AppCode.Modules;
+using Riode.Template.WebUI.Models.DataContext;
+using Riode.Template.WebUI.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +13,22 @@ namespace Riode.Template.WebUI.Controllers
 {
     public class ProductsController : Controller
     {
-        public IActionResult Index()
+        readonly RiodeDbContext db;
+        readonly IMediator mediator;
+
+        public ProductsController(RiodeDbContext db, IMediator mediator)
         {
-            return View();
+            this.db = db;
+            this.mediator = mediator;
+        }
+
+        async public Task<IActionResult> Index(int? id)
+        {
+            ProductPagedQuery query = new();
+
+            IEnumerable<ProductSizeColorCategoryCollection> data = await mediator.Send(query);
+            
+            return View(data);
         }
 
         // Product Pages

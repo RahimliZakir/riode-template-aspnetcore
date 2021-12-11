@@ -24,6 +24,7 @@ namespace Riode.Template.WebUI.Models.Entity
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual ICollection<ProductCategoryItem> ProductCategoryItems { get; set; }
         public virtual ICollection<SpecificationProductItem> SpecificationProductItems { get; set; }
+        public virtual ICollection<ProductSizeColorCategoryCollection> ProductSizeColorCategoryCollections { get; set; }
 
         [NotMapped]
         public ImageItemFormModel[] Files { get; set; }
